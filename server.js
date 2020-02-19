@@ -20,11 +20,15 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 
 // include router
+const postRouter = require("./routes/postRouter")
+const reportPostRouter = require("./routes/reportPostRouter")
 const userRouter = require("./routes/userRouter")
 const indexRouter = require("./routes/indexRouter")
 
 // routing
 app.use("/user", userRouter)
+app.use("/post", postRouter)
+app.use("/reportpost", reportPostRouter)
 app.use("/", indexRouter)
 
 // starting server
