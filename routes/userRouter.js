@@ -6,7 +6,10 @@ const cookieParser = require('cookie-parser')
 const auth = require('../middleware/auth');
 require("dotenv").config()
 
+router.get('/logoff',userController.logoff);
+
 router.post('/create',userController.create);
+router.get('/delete/:id',userController.delete)
 router.get("/list", auth,userController.index)
 router.get("/login/:username/:password", userController.login)
 router.get("/verify",function(req, res, next) {

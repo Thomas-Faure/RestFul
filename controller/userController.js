@@ -37,6 +37,18 @@ console.log(username)
                             console.log(err)
                         })
 }
+
+exports.delete = (req, res) => {
+  const id_User = parseInt(req.params.id)
+  User.delete(id_User)
+      .then(() => {
+          res.sendStatus(200)
+      })
+      .catch(err => {
+          console.log(err)
+          res.status(401).send({ error: 'Erreur'})
+      })
+}
 exports.login = (req,res) => {
   User.login(req.params.username,req.params.password)
   .then(resultat => {
@@ -51,6 +63,11 @@ exports.login = (req,res) => {
       res.send("erreur dans le mot de passe ou username")
     }
   })
+}
+exports.logoff = (req, res) => {
+  console.log("off")
+  res.clearCookie('auth')
+  res.redirect('/')
 }
 exports.getUserById = (req, res) => {
  

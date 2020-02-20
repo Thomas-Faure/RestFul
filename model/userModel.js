@@ -41,6 +41,17 @@ module.exports.create = (user) => {
         })
     })
 }
+module.exports.delete = (user_Id) =>{
+    return new Promise(function (resolve, reject) {
+        con.query('DELETE FROM user WHERE user_id = ?', [user_Id], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
 module.exports.getUserById = (id) => {
   return new Promise((resolve, reject) =>{
       con.query('SELECT * FROM user where user_id=?',[id], (err, res) => {
