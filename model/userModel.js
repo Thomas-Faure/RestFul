@@ -23,6 +23,21 @@ module.exports.getUserById = (id) => {
       })
   })
 }
+module.exports.login = (username,password) => {
+    return new Promise((resolve, reject) =>{
+        con.query('SELECT * FROM user where username=? and password=?',[username,password], (err, res) => {
+        
+            if (err || res.length == 0) {
+            
+                console.log("false")
+                resolve(false)
+            } else {
+                console.log("true")
+                resolve(true)
+            }
+        })
+    })
+  }
 
 
 

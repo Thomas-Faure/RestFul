@@ -1,9 +1,18 @@
+require("dotenv").config();
 const express = require("express")
+const cors = require('cors');
+const bodyParser = require("body-parser");
+const jwt = require('jsonwebtoken');
 const app = express()
 var methodOverride = require("method-override")
 const path = require("path")
 const con = require("./config/db.js")
+const cookieParser = require("cookie-parser")
 
+app.use(cors());
+app.use(bodyParser.json());
+app.use(cookieParser())
+app.use(bodyParser.urlencoded({ extended: true }));
 // Using pug template engine
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
