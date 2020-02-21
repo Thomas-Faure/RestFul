@@ -9,6 +9,9 @@ const path = require("path")
 const con = require("./config/db.js")
 const cookieParser = require("cookie-parser")
 
+
+const bearerToken = require('express-bearer-token');
+app.use(bearerToken());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser())
@@ -40,7 +43,26 @@ app.use("/post", postRouter)
 app.use("/reportpost", reportPostRouter)
 app.use("/", indexRouter)
 
+app.use(function(req, res, next){
+  res.status(404);
+
+  // respond with html page
+  if (req.accepts('html')) {
+    res.render('404', { url: req.url });
+    return;
+  }
+
+  // respond with json
+  if (req.accepts('json')) {
+    res.send({ error: 'Not found' });
+    return;
+  }
+
+  // default to plain-text. send()
+  res.type('txt').send('Not found');
+});
+
 // starting server
-app.listen(3000, function() {
+app.listen(2000, function() {
   console.log("server listening on port 3000")
 })

@@ -11,21 +11,21 @@ router.get('/logoff',userController.logoff);
 router.post('/create',userController.create);
 router.get('/delete/:id',userController.delete)
 router.get("/list", auth,userController.index)
-router.get("/login/:username/:password", userController.login)
+router.post("/login", userController.login)
 router.get("/verify",function(req, res, next) {
-    var token = req.cookies.auth;
+    var token = req.token;
     // decode token
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET, function(err, token_data) {
         if (err) {
-            res.send('error');
+            res.json(false);
         } else {
-            res.send('connecté');
+            res.send(true)
         }
       });
   
     } else {
-        res.send('non connecté');
+        res.send(false)
     }
 }
     );

@@ -19,6 +19,7 @@ exports.index = (req, res) => {
     })
 }
 
+
 exports.create = (req,res)=>{
   const username = req.body.username
   const firstname = req.body.firstname
@@ -50,24 +51,25 @@ exports.delete = (req, res) => {
       })
 }
 exports.login = (req,res) => {
-  User.login(req.params.username,req.params.password)
+  console.log(req.body);
+  User.login(req.body.username,req.body.password)
   .then(resultat => {
     if(resultat){
-      var user = {name:req.params.username}; //!! find the user and check user from db then
+      var user = {name:req.body.username}; //!! find the user and check user from db then
       var token = jwt.sign(user, process.env.JWT_SECRET, {
         expiresIn: 60 * 60 * 24
             });
-      res.cookie('auth',token);
-      res.send("connecté")
+      
+      res.json({token:token})
     }else{
-      res.send("erreur dans le mot de passe ou username")
+      res.json({error:"erreur dans le mot de passe ou username"})
     }
   })
 }
 exports.logoff = (req, res) => {
-  console.log("off")
-  res.clearCookie('auth')
-  res.redirect('/')
+
+
+  res.json(true)
 }
 exports.getUserById = (req, res) => {
  
