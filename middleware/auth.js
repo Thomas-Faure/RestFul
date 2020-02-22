@@ -15,15 +15,13 @@ module.exports = (req, res, next) => {
         });
     
     } else {
-        res.status(403).json({
-            error: new Error('Invalid request!')
-          });
+       throw 'Invalid'
     }
       
     
   } catch {
     res.status(401).json({
-      error: new Error('Invalid request!')
+      error: true
     });
   }
 };

@@ -1,4 +1,16 @@
 const con = require("../config/db.js")
+class Post {
+    constructor(post_id,title, description, post_category, author, url_image) {
+        this.post_id = post_id;
+        this.title = title;
+        this.description = description;
+        this.post_category = post_category;
+        this.author = author;
+        this.url_image = url_image;
+ 
+    }
+}
+module.exports = Post
 module.exports.getAll = () => {
     return new Promise((resolve, reject) =>{
         con.query('SELECT * FROM post', (err, res) => {

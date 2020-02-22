@@ -9,17 +9,14 @@ class User {
         this.mail = mail;
         this.admin = admin;
         this.sexe = sexe;
-        this.password = password;
-       
+        this.password = password;  
     }
 }
 module.exports = User
 module.exports.getAll = () => {
     return new Promise((resolve, reject) =>{
         con.query('SELECT * FROM user', (err, results) => {
-            console.log('>> results: ', results );
             var string=JSON.stringify(results);
-            console.log('>> string: ', string );
             var json =  JSON.parse(string);
             if (err) {
                 reject(err)
@@ -36,7 +33,7 @@ module.exports.create = (user) => {
             if (err) {
                 reject(err)
             } else {
-                resolve()
+                resolve(res)
             }
         })
     })
@@ -67,13 +64,9 @@ module.exports.getUserById = (id) => {
 module.exports.login = (username,password) => {
     return new Promise((resolve, reject) =>{
         con.query('SELECT * FROM user where username=? and password=?',[username,password], (err, res) => {
-        
             if (err || res.length == 0) {
-            
-                console.log("false")
                 resolve(false)
             } else {
-                console.log("true")
                 resolve(true)
             }
         })

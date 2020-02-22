@@ -3,14 +3,14 @@ const router = express.Router()
 const userController = require("../controller/userController")
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
-const auth = require('../middleware/auth');
+const Auth = require('../middleware/auth');
 require("dotenv").config()
 
 router.get('/logoff',userController.logoff);
 
 router.post('/create',userController.create);
 router.get('/delete/:id',userController.delete)
-router.get("/list", auth,userController.index)
+router.get("/list",Auth,userController.index)
 router.post("/login", userController.login)
 router.get("/verify",function(req, res, next) {
     var token = req.token;
@@ -23,7 +23,6 @@ router.get("/verify",function(req, res, next) {
             res.send(true)
         }
       });
-  
     } else {
         res.send(false)
     }
@@ -31,7 +30,7 @@ router.get("/verify",function(req, res, next) {
     );
 
 
-  router.get("/:id", userController.getUserById)
+  router.get("/:id",Auth,userController.getUserById)
 
 
 module.exports = router

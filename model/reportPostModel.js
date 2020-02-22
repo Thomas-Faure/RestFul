@@ -23,8 +23,3 @@ module.exports.getPostById = (post,author) => {
       })
   })
 }
-
-
-
-  
-
