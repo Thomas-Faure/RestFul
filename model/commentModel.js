@@ -10,7 +10,7 @@ class Comment {
  
     }
 }
-module.exports = Post
+module.exports = Comment
 module.exports.getAll = () => {
     return new Promise((resolve, reject) =>{
         con.query('SELECT * FROM comment', (err, res) => {

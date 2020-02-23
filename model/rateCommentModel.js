@@ -14,7 +14,7 @@ module.exports.getRatesByUser = (id) => {
 }
 module.exports.getRateByUserByComment = (userid,commentId) => {
     return new Promise((resolve, reject) =>{
-        con.query('SELECT * FROM rateCOmment where author=? and comment=?',[userid,commentId], (err, res) => {
+        con.query('SELECT * FROM rateComment where author=? and comment=?',[userid,commentId], (err, res) => {
             if (err) {
                 reject(err)
             } else {

@@ -55,7 +55,7 @@ module.exports.getUserById = (id) => {
           if (err) {
               reject(err)
           } else {
-              console.log(res)
+      
               resolve(res)
           }
       })
