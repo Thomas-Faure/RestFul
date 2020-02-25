@@ -1,6 +1,6 @@
 const con = require("../config/db.js")
 class Comment {
-    constructor(comment_id, description, comment_category, author, post) {
+    constructor(comment_id, description, comment_category, author, post,date) {
         this.comment_id = comment_id;
         this.description = description;
         this.comment_category = comment_category;
@@ -65,6 +65,18 @@ module.exports.delete = (comment_id) =>{
             if (err) {
                 reject(err)
             } else {
+                resolve(res)
+            }
+        })
+    })
+}
+module.exports.editCommentById = (comment) => {
+    return new Promise((resolve, reject) => {
+        con.query('UPDATE comment SET description = ? and comment_category = ? and author = ? and post = ? and date = ? where comment_id=? ', [comment.description, comment.comment_category,comment.author, comment.post, comment.date, comment.comment_id], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+
                 resolve(res)
             }
         })
