@@ -72,7 +72,7 @@ module.exports.delete = (comment_id) =>{
 }
 module.exports.editCommentById = (comment) => {
     return new Promise((resolve, reject) => {
-        con.query('UPDATE comment SET description = ? and comment_category = ? and author = ? and post = ? and date = ? where comment_id=? ', [comment.description, comment.comment_category,comment.author, comment.post, comment.date, comment.comment_id], (err, res) => {
+        con.query('UPDATE comment SET description = ? , comment_category = ? and author = ? and post = ? and date = ? where comment_id=? ', [comment.description, comment.comment_category,comment.author, comment.post, comment.date, comment.comment_id], (err, res) => {
             if (err) {
                 reject(err)
             } else {

@@ -57,7 +57,7 @@ module.exports.getCommentCategoryById = (id) => {
 }
 module.exports.editCommentCategoryById = (commentCategory) => {
     return new Promise((resolve, reject) => {
-        con.query('Update commentCategory Set description = ? and couleur = ? where comment_category_id=?', [commentCategory.description,commentCategory.couleur ,commentCategory.id], (err, res) => {
+        con.query('Update commentCategory Set description = ? , couleur = ? where comment_category_id=?', [commentCategory.description,commentCategory.couleur ,commentCategory.id], (err, res) => {
             if (err) {
                 reject(err)
             } else {
