@@ -36,12 +36,14 @@ const postRouter = require("./routes/postRouter")
 const reportPostRouter = require("./routes/reportPostRouter")
 const userRouter = require("./routes/userRouter")
 const indexRouter = require("./routes/indexRouter")
+const commentCategoryRouter = require("./routes/commentCategoryRouter")
 
 // routing
 app.use("/user", userRouter)
 app.use("/post", postRouter)
 app.use("/reportpost", reportPostRouter)
 app.use("/", indexRouter)
+app.use("/commentCategory", commentCategoryRouter)
 
 app.use(function(req, res, next){
   res.status(404);
