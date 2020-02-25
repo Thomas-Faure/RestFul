@@ -4,9 +4,9 @@ const commentCategoryController = require("../controller/commentCategoryControll
 
 router.get("/", commentCategoryController.index)
 router.get("/:id", commentCategoryController.getCommentCategoryById)
-router.get("/create", commentCategoryController.create)
-router.get("/:id/delete", commentCategoryController.delete)
-router.get("/:id/edit", commentCategoryController.edit)
+router.put("/create", commentCategoryController.create)
+router.delete("/:id/delete", commentCategoryController.delete)
+router.post("/:id/edit", commentCategoryController.edit)
 
 
 

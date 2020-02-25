@@ -49,7 +49,7 @@ exports.edit = (req, res) => {
 
 exports.getPostCategoryById = (req, res) => {
 
-    PostCategory.getPostByPostId(req.params.id)
+    PostCategory.getPostCategoryById(req.params.id)
         .then(resultat => {
             res.json(resultat)
         })
