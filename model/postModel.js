@@ -1,13 +1,13 @@
 const con = require("../config/db.js")
 class Post {
-    constructor(post_id,title, description, post_category, author, url_image) {
+    constructor(post_id,title, description, post_category, author, url_image,date) {
         this.post_id = post_id;
         this.title = title;
         this.description = description;
         this.post_category = post_category;
         this.author = author;
         this.url_image = url_image;
- 
+        this.date = date;
     }
 }
 module.exports = Post

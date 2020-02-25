@@ -64,5 +64,5 @@ app.use(function(req, res, next){
 
 // starting server
 app.listen(2000, function() {
-  console.log("server listening on port 3000")
+  console.log("server listening on port 2000")
 })
