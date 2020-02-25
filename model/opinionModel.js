@@ -7,6 +7,19 @@ class Opinion {
     }
 }
 module.exports = Opinion
+module.exports.getAll = () => {
+    return new Promise((resolve, reject) => {
+        con.query('SELECT * FROM opinion', (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+                console.log(res)
+                resolve(res)
+            }
+        })
+    })
+}
+
 module.exports.getOpinionsByUser = (id) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM opinion where author=?', [id], (err, res) => {
@@ -46,6 +59,17 @@ module.exports.create = (opinion) => {
 module.exports.delete = (opinion) => {
     return new Promise(function (resolve, reject) {
         con.query('DELETE FROM opinion WHERE author = ? and post = ?', [opinion.author, opinion.post], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
+module.exports.edit = (opinion) => {
+    return new Promise(function (resolve, reject) {
+        con.query('UPDATE opinion SET like = ? WHERE author = ? and post = ?', [opinion.like, opinion.author, opinion.post], (err, res) => {
             if (err) {
                 reject(err)
             } else {
