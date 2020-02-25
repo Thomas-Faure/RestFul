@@ -41,7 +41,7 @@ module.exports.getCommentById = (id) => {
           if (err) {
               reject(err)
           } else {
-              console.log(res)
+            
               resolve(res)
           }
       })

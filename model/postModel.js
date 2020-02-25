@@ -13,7 +13,7 @@ class Post {
 module.exports = Post
 module.exports.getAll = () => {
     return new Promise((resolve, reject) =>{
-        con.query('SELECT * FROM post', (err, res) => {
+        con.query('SELECT * FROM post p,user u where u.user_id=p.author', (err, res) => {
             if (err) {
                 reject(err)
             } else {
