@@ -7,9 +7,9 @@ const Auth = require('../middleware/auth');
 require("dotenv").config()
 
 router.get('/logoff',userController.logoff);
-
-router.post('/create',userController.create);
-router.get('/delete/:id',userController.delete)
+router.get('/username/:username',userController.getUserByUsername);
+router.put('/create',userController.create);
+router.delete('/delete/:id',userController.delete)
 router.get("/list",Auth,userController.index)
 router.post("/login", userController.login)
 router.get("/verify",function(req, res, next) {

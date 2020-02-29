@@ -51,7 +51,7 @@ module.exports.delete = (user_Id) =>{
 }
 module.exports.getUserById = (id) => {
   return new Promise((resolve, reject) =>{
-      con.query('SELECT * FROM user where user_id=?',[id], (err, res) => {
+      con.query('SELECT user_id, firstname, lastname, username, mail, sexe, birthday, admin FROM user where user_id=?',[id], (err, res) => {
           if (err) {
               reject(err)
           } else {
@@ -61,6 +61,18 @@ module.exports.getUserById = (id) => {
       })
   })
 }
+module.exports.getUserByUsername = (username) => {
+    return new Promise((resolve, reject) =>{
+        con.query('SELECT user_id, firstname, lastname, username, mail, sexe, birthday, admin FROM user where username=?',[username], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+        
+                resolve(res)
+            }
+        })
+    })
+  }
 module.exports.login = (username,password) => {
     return new Promise((resolve, reject) =>{
         con.query('SELECT * FROM user where username=? and password=?',[username,password], (err, res) => {

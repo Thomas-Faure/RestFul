@@ -82,5 +82,16 @@ exports.getUserById = (req, res) => {
   })
 }
 
+exports.getUserByUsername = (req, res) => {
+  User.getUserByUsername(req.params.username)
+  .then(resultat => {
+      res.json(resultat)
+  })
+  .catch(err => {
+    console.log(err)
+      res.json({})
+  })
+}
+
   
 
