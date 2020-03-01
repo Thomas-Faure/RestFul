@@ -6,7 +6,23 @@ class RateComment {
         this.like = like;
     }
 }
+
+
 module.exports = RateComment
+
+module.exports.getAll = () => {
+    return new Promise((resolve, reject) => {
+        con.query('SELECT * FROM rateComment', (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+                console.log(res)
+                resolve(res)
+            }
+        })
+    })
+}
+
 module.exports.getRatesByUser = (id) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM rateComment where author=?', [id], (err, res) => {
@@ -45,6 +61,18 @@ module.exports.create = (rate) => {
 module.exports.delete = (rate) => {
     return new Promise(function (resolve, reject) {
         con.query('DELETE FROM rateComment WHERE author = ? and post = ?', [rate.author, rate.post], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
+
+module.exports.edit = (rate) => {
+    return new Promise(function (resolve, reject) {
+        con.query('UPDATE rateComment SET like = ? WHERE author = ? and comment = ?', [rate.like, rate.author, rate.comment], (err, res) => {
             if (err) {
                 reject(err)
             } else {
