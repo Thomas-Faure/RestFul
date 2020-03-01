@@ -1,20 +1,30 @@
 const Comment = require("../model/commentModel")
-
+const User = require("../model/userModel")
 exports.create = (req, res) => {
 
   const description = req.body.description
-  const comment_category = req.body.comment_category
-  const author = 3
+  const comment_category = 1
+  const username = req.body.username
   const post = req.body.post
+  console.log(req.body)
 
-  const comment = new Comment(1, description, comment_category, author, post)
-  Comment.create(comment)
-    .then(() => {
-      console.log("success")
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  User.getUserByUsername(username)
+  .then(resultat => {
+    console.log(resultat)
+    const author = resultat[0].user_id
+    const comment = new Comment(1, description, comment_category, author, post)
+    Comment.create(comment)
+      .then(() => {
+        console.log("success")
+        res.json({result: true})
+      })
+      .catch(err => {
+        console.log(err)
+        res.json({result: false})
+      })
+
+  })
+
 }
 
 exports.index = (req, res) => {

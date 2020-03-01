@@ -8,7 +8,7 @@ require("dotenv").config()
 
 router.get('/logoff',userController.logoff);
 router.get('/username/:username',userController.getUserByUsername);
-router.put('/create',userController.create);
+router.post('/create',userController.create);
 router.delete('/delete/:id',userController.delete)
 router.get("/list",Auth,userController.index)
 router.post("/login", userController.login)
