@@ -17,7 +17,7 @@ module.exports.getAll = () => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+               
                 resolve(res)
             }
         })
@@ -29,7 +29,7 @@ module.exports.getCommentByPostId = (id) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+            
                 resolve(res)
             }
         })
@@ -50,7 +50,7 @@ module.exports.getCommentById = (id) => {
 
 module.exports.create = (comment) => {
     return new Promise(function (resolve, reject) {
-        con.query('INSERT INTO comment (description,comment_category,author,post,date) VALUES (?,?);', [comment.description,comment.comment_category,comment.author,comment.post,new Date().toISOString().slice(0, 19).replace('T', ' ')], (err, res) => {
+        con.query('INSERT INTO comment (description,comment_category,author,post,date) VALUES (?,?,?,?,?);', [comment.description,comment.comment_category,comment.author,comment.post,new Date().toISOString().slice(0, 19).replace('T', ' ')], (err, res) => {
             if (err) {
                 reject(err)
             } else {

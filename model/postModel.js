@@ -17,7 +17,7 @@ module.exports.getAll = () => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+              
                 resolve(res)
             }
         })
@@ -37,7 +37,7 @@ module.exports.getPostById = (id) => {
 }
 module.exports.create = (post) => {
     return new Promise(function (resolve, reject) {
-        con.query('INSERT INTO post (post_id, title,description,post_category,author,url_image,date) VALUES (1,?,?,?,?,?,?);', [post.title, post.description, post.post_category, post.author, post.url_image, post.date], (err, res) => {
+        con.query('INSERT INTO post (title,description,post_category,author,url_image,date) VALUES (?,?,?,?,?,?);', [post.title, post.description, post.post_category, post.author, post.url_image, post.date], (err, res) => {
             if (err) {
                 reject(err)
             } else {

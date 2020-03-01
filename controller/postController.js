@@ -1,21 +1,34 @@
 const Post = require("../model/postModel")
+const User = require("../model/userModel")
 
 exports.create = (req, res) => {
 
+  console.log(req.body)
   const title = req.body.title
+  const username = req.body.username
   const description = req.body.description
-  const post_category = req.body.post_category
-  const author = 3
-  const url_image = req.body.url_image
+  //à changer
+  const post_category = 1
+  //à changer
+  User.getUserByUsername(username)
+  .then(resultat => {
+    console.log(resultat)
+    const author = resultat[0].user_id
+    const url_image = ""
+  
+    const post = new Post(1, title, description, post_category, author, url_image, new Date().toISOString().slice(0, 19).replace('T', ' '))
+    Post.create(post)
+      .then((el) => {
+        console.log({result: true,id :el.insertId})
+        res.json({result: true,id :el.insertId})
+      })
+      .catch(err => {
+        console.log(err)
+        res.json({result: false,id : -1})
+      })
 
-  const post = new Post(1, title, description, post_category, author, url_image)
-  Post.create(post)
-    .then(() => {
-      console.log("success")
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  })
+ 
 }
 
 exports.index = (req, res) => {
