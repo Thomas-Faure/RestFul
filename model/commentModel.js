@@ -17,7 +17,7 @@ module.exports.getAll = () => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+               
                 resolve(res)
             }
         })
@@ -29,7 +29,7 @@ module.exports.getCommentByPostId = (id) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+            
                 resolve(res)
             }
         })

@@ -60,9 +60,9 @@ exports.login = (req,res) => {
         var token = jwt.sign(user, process.env.JWT_SECRET, {
           expiresIn: 60 * 60 * 24
               });
-              decode = jwt.verify(token, process.env.JWT_SECRET);
-              console.log("username : "+decode.id)
-        res.json({token:token})
+           /*   decode = jwt.verify(token, process.env.JWT_SECRET);
+              console.log("username : "+decode.id)*/
+        res.json({token:token,id: resultat2[0].user_id})
       })
      
     }else{
@@ -79,9 +79,12 @@ exports.getUserById = (req, res) => {
   console.log("go")
   User.getUserById(req.params.id)
   .then(resultat => {
+      console.log("on a pas de soucis")
+      console.log(resultat)
       res.json(resultat)
   })
   .catch(err => {
+    console.log("on a un soucis")
     console.log(err)
       res.json({})
   })

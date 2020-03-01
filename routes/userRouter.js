@@ -16,15 +16,10 @@ router.get("/verify",function(req, res, next) {
     var token = req.token;
     // decode token
     if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, function(err, token_data) {
-        if (err) {
-            res.json(false);
-        } else {
-            res.send(true)
-        }
-      });
+      decode = jwt.verify(token, process.env.JWT_SECRET);
+      res.json({error:false,id:decode.id})
     } else {
-        res.send(false)
+        res.json({error:true})
     }
 }
     );
