@@ -65,6 +65,18 @@ exports.getOpinionsByUser = (req, res) => {
         })
 }
 
+exports.getOpinionsByPost = (req, res) => {
+
+    Opinion.getOpinionsByPost(req.params.id)
+        .then(resultat => {
+            res.json(resultat)
+        })
+        .catch(err => {
+            console.log(err)
+            res.json({})
+        })
+}
+
 exports.getOpinionByUserByPost = (req, res) => {
     const author = req.params.author
     const post = req.params.post

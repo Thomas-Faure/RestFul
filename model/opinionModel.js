@@ -32,6 +32,19 @@ module.exports.getOpinionsByUser = (id) => {
         })
     })
 }
+
+module.exports.getOpinionsByPost = (id) => {
+    return new Promise((resolve, reject) => {
+        con.query('SELECT * FROM opinion where post=?', [id], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+                console.log(res)
+                resolve(res)
+            }
+        })
+    })
+}
 module.exports.getOpinionByUserByPost = (userid, postId) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM opinion where author=? and post=?', [userid, postId], (err, res) => {
