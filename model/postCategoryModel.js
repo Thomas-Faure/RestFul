@@ -1,7 +1,7 @@
 const con = require("../config/db.js")
 class PostCategory {
-    constructor(comment_category_id, description, couleur, date) {
-        this.comment_category_id = comment_category_id;
+    constructor(post_category_id, description, couleur, date) {
+        this.post_category_id = post_category_id;
         this.description = description;
         this.couleur = couleur;
     }

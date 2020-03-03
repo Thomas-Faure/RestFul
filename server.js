@@ -39,7 +39,7 @@ const indexRouter = require("./routes/indexRouter")
 const commentCategoryRouter = require("./routes/commentCategoryRouter")
 const commentRouter = require("./routes/commentRouter")
 const opinionRouter = require("./routes/opinionRouter")
-const postCategoryRouter = require("./routes/commentCategoryRouter")
+const postCategoryRouter = require("./routes/postCategoryRouter")
 const rateCommentRouter = require("./routes/rateCommentRouter")
 
 // routing
