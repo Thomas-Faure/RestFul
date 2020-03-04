@@ -32,6 +32,19 @@ module.exports.getReportCommentByUserByComment = (userid, commentId) => {
     })
 }
 
+module.exports.getReport = (comment, author) => {
+    return new Promise((resolve, reject) => {
+        con.query('SELECT * FROM reportComment where comment=? and author = ?', [comment, author], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+                console.log(res)
+                resolve(res)
+            }
+        })
+    })
+}
+
 module.exports.create = (report) => {
     return new Promise(function (resolve, reject) {
         con.query('INSERT INTO reportComment (author, comment,report) VALUES (?,?,?);', [report.author, report.comment, report.report], (err, res) => {

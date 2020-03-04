@@ -34,6 +34,7 @@ app.use(methodOverride("_method"))
 // include router
 const postRouter = require("./routes/postRouter")
 const reportPostRouter = require("./routes/reportPostRouter")
+const reportCommentRouter = require("./routes/reportCommentRouter")
 const userRouter = require("./routes/userRouter")
 const indexRouter = require("./routes/indexRouter")
 const commentCategoryRouter = require("./routes/commentCategoryRouter")
@@ -46,11 +47,13 @@ const rateCommentRouter = require("./routes/rateCommentRouter")
 app.use("/user", userRouter)
 app.use("/post", postRouter)
 app.use("/reportpost", reportPostRouter)
+app.use("/reportcomment", reportCommentRouter)
 app.use("/", indexRouter)
 app.use("/commentCategory", commentCategoryRouter)
 app.use("/comment", commentRouter)
 app.use("/opinion",opinionRouter)
 app.use("/postCategory", postCategoryRouter)
+
 app.use("/rateComment", rateCommentRouter)
 
 app.use(function(req, res, next){
