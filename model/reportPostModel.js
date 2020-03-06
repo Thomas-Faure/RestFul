@@ -14,7 +14,7 @@ module.exports.getAllByPost = (post_id) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+              
                 resolve(res)
             }
         })
@@ -26,7 +26,7 @@ module.exports.getAll = () => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+          
                 resolve(res)
             }
         })
@@ -38,7 +38,7 @@ module.exports.getReport = (post, author) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+             
                 resolve(res)
             }
         })
@@ -51,7 +51,7 @@ module.exports.getPostById = (post, author) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+               
                 resolve(res)
             }
         })

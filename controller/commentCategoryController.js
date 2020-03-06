@@ -49,7 +49,7 @@ exports.edit = (req, res) => {
 
 exports.getCommentCategoryById = (req, res) => {
 
-    CommentCategory.getCommentByPostId(req.params.id)
+    CommentCategory.getCommentCategoryById(req.params.id)
         .then(resultat => {
             res.json(resultat)
         })

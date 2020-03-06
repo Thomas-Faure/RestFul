@@ -13,7 +13,7 @@ module.exports.getAll = () => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+            
                 resolve(res)
             }
         })
@@ -26,7 +26,7 @@ module.exports.getOpinionsByUser = (id) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+            
                 resolve(res)
             }
         })
@@ -39,7 +39,7 @@ module.exports.getOpinionsByPost = (id) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+              
                 resolve(res)
             }
         })
@@ -51,7 +51,7 @@ module.exports.getOpinionByUserByPost = (userid, postId) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+            
                 resolve(res)
             }
         })

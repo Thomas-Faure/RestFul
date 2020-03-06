@@ -1,7 +1,7 @@
 const Post = require("../model/reportPostModel")
 const jwt = require('jsonwebtoken');
 exports.index = (req, res) => {
-    console.log("et")
+    
     Post.getAll()
     .then(resultat => {
         res.json(resultat)
@@ -57,7 +57,7 @@ exports.getPostById = (req, res) => {
 }
 
 exports.getReportCountByPostId = (req, res) => {
-  console.log("test")
+ 
   Post.getAllByPost(req.params.id)
   .then(resultat => {
       res.json(resultat.length)

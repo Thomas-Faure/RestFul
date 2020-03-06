@@ -6,11 +6,11 @@ exports.create = (req, res) => {
   const comment_category = 1
   const username = req.body.username
   const post = req.body.post
-  console.log(req.body)
+
 
   User.getUserByUsername(username)
   .then(resultat => {
-    console.log(resultat)
+ 
     const author = resultat[0].user_id
     const comment = new Comment(1, description, comment_category, author, post)
     Comment.create(comment)

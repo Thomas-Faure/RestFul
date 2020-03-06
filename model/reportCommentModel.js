@@ -13,7 +13,7 @@ module.exports.getReportCommentByUser = (id) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+             
                 resolve(res)
             }
         })
@@ -25,7 +25,7 @@ module.exports.getReportCommentByUserByComment = (userid, commentId) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+         
                 resolve(res)
             }
         })
@@ -38,7 +38,7 @@ module.exports.getReport = (comment, author) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+            
                 resolve(res)
             }
         })

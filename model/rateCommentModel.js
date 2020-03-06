@@ -16,7 +16,7 @@ module.exports.getAll = () => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+                
                 resolve(res)
             }
         })
@@ -29,7 +29,7 @@ module.exports.getRatesByUser = (id) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+            
                 resolve(res)
             }
         })
@@ -41,7 +41,7 @@ module.exports.getRateByUserByComment = (userid, commentId) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+            
                 resolve(res)
             }
         })

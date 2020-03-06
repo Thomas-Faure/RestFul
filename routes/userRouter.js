@@ -9,7 +9,7 @@ require("dotenv").config()
 router.get('/logoff',userController.logoff);
 router.get('/username/:username',userController.getUserByUsername);
 router.post('/create',userController.create);
-router.delete('/delete/:id',userController.delete)
+router.delete('/:id/delete',userController.delete)
 router.get("/list",Auth,userController.index)
 router.post("/login", userController.login)
 router.get("/verify",function(req, res, next) {

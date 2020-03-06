@@ -27,13 +27,13 @@ exports.index = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id
     PostCategory.delete(id)
-        .then(resultat => {
-            res.json(resultat)
-        })
-        .catch(err => {
-            console.log(err)
-            res.json({})
-        })
+    .then(resultat => {
+        res.json(resultat)
+    })
+    .catch(err => {
+        console.log(err)
+        res.json({})
+    })
 }
 exports.edit = (req, res) => {
     const postCategory = new PostCategory(req.params.id,req.body.description, req.body.couleur);

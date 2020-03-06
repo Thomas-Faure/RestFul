@@ -25,11 +25,11 @@ module.exports.getAll = () => {
 }
 module.exports.getPostById = (id) => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT * FROM post p, user u, postCategory c where post_id=? and p.author = u.user_id and c.post_category_id = p.post_category', [id], (err, res) => {
+        con.query('SELECT p.post_id,p.title,p.description,p.post_category,p.author,p.url_image,p.date,c.description as categoryDescription,c.couleur as couleur FROM post p, user u, postCategory c where post_id=? and p.author = u.user_id and c.post_category_id = p.post_category', [id], (err, res) => {
             if (err) {
                 reject(err)
             } else {
-                console.log(res)
+                
                 resolve(res)
             }
         })
@@ -60,7 +60,7 @@ module.exports.delete = (post_id) => {
 
 module.exports.editPost = (post) => {
     return new Promise((resolve, reject) => {
-        con.query('UPDATE post SET  title = ?, description = ?, post_category = ?, author = ?, url_image = ?, date = ? where post_id=?', [post.title,post.description,post.post_category,post.author,post.url_image, post.date,post.post_id], (err, res) => {
+        con.query('UPDATE post SET  title = ?, description = ?, post_category = ?, url_image = ? where post_id=?', [post.title,post.description,post.post_category,post.url_image,post.post_id], (err, res) => {
             if (err) {
                 reject(err)
             } else {

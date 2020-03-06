@@ -3,7 +3,7 @@ const User = require("../model/userModel")
 
 exports.create = (req, res) => {
 
-  console.log(req.body)
+  
   const title = req.body.title
   const username = req.body.username
   const description = req.body.description
@@ -12,14 +12,14 @@ exports.create = (req, res) => {
   //à changer
   User.getUserByUsername(username)
   .then(resultat => {
-    console.log(resultat)
+ 
     const author = resultat[0].user_id
     const url_image = ""
   
     const post = new Post(1, title, description, post_category, author, url_image, new Date().toISOString().slice(0, 19).replace('T', ' '))
     Post.create(post)
       .then((el) => {
-        console.log({result: true,id :el.insertId})
+       
         res.json({result: true,id :el.insertId})
       })
       .catch(err => {
@@ -66,8 +66,8 @@ exports.delete = (req, res) => {
       })
 }
 exports.edit = (req, res) => {
-  const post = new Post(req.params.id, req.body.title,req.body.description,req.body.post_category,req.body.author,req.body.url_image,req.body.date)
-  PostCategory.editPostCategoryById(post)
+  const post = new Post(req.params.id, req.body.title,req.body.description,req.body.category,null," ",null)
+  Post.editPost(post)
       .then(resultat => {
           res.json(resultat)
       })
