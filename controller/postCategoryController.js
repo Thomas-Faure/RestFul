@@ -1,18 +1,19 @@
 const PostCategory = require("../model/postCategoryModel")
 
 exports.create = (req, res) => {
-
     const description = req.body.description
     const couleur = req.body.couleur
-
-    const postCategory = new PostCategory(1,description,couleur)
-    Post.create(postCategory)
-        .then(() => {
-            console.log("success")
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    const image = "test"
+    const postCategory = new PostCategory(1,description,couleur,image)
+    PostCategory.create(postCategory)
+    .then((el) => {
+       
+        res.json({result: true,id :el.insertId})
+      })
+      .catch(err => {
+        console.log(err)
+        res.json({result: false,id : -1})
+      })
 }
 exports.index = (req, res) => {
     PostCategory.getAll()
@@ -36,7 +37,7 @@ exports.delete = (req, res) => {
     })
 }
 exports.edit = (req, res) => {
-    const postCategory = new PostCategory(req.params.id,req.body.description, req.body.couleur);
+    const postCategory = new PostCategory(req.params.id,req.body.description, req.body.couleur,"test");
     PostCategory.editPostCategoryById(postCategory)
         .then(resultat => {
             res.json(resultat)

@@ -1,9 +1,10 @@
 const con = require("../config/db.js")
 class PostCategory {
-    constructor(post_category_id, description, couleur, date) {
+    constructor(post_category_id, description, couleur, url_image) {
         this.post_category_id = post_category_id;
         this.description = description;
         this.couleur = couleur;
+        this.url_image=url_image;
     }
 }
 module.exports = PostCategory

@@ -1,22 +1,19 @@
 const Post = require("../model/postModel")
 const User = require("../model/userModel")
 
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser')
+
 exports.create = (req, res) => {
 
-  
+  console.log(req.body)
   const title = req.body.title
-  const username = req.body.username
+  const category = req.body.category
   const description = req.body.description
-  //à changer
-  const post_category = 1
-  //à changer
-  User.getUserByUsername(username)
-  .then(resultat => {
- 
-    const author = resultat[0].user_id
-    const url_image = ""
-  
-    const post = new Post(1, title, description, post_category, author, url_image, new Date().toISOString().slice(0, 19).replace('T', ' '))
+  var token = req.token;
+  if (token) {
+    decode = jwt.verify(token, process.env.JWT_SECRET);
+    const post = new Post(1, title, description, category, decode.id, "test", new Date().toISOString().slice(0, 19).replace('T', ' '))
     Post.create(post)
       .then((el) => {
        
@@ -27,7 +24,11 @@ exports.create = (req, res) => {
         res.json({result: false,id : -1})
       })
 
-  })
+  } else {
+      res.json({error:true})
+  }
+
+  
  
 }
 

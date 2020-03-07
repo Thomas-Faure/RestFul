@@ -21,22 +21,27 @@ exports.index = (req, res) => {
 
 
 exports.create = (req,res)=>{
-  const username = req.body.username
-  const firstname = req.body.firstname
-  const lastname = req.body.lastname
-  const mail = req.body.mail
-  const admin = req.body.admin
-  const sexe = req.body.sexe
-  const password = req.body.password
-
-  const user = new User(1,username, firstname, lastname, new Date().toISOString().slice(0, 19).replace('T', ' '), mail, admin,sexe,password) 
+ 
+  var date = new Date(req.body.birthday);
+  date.setDate(date.getDate() + 1);
+  const user = new User(
+    1,
+     req.body.username,
+      req.body.firstname,
+       req.body.lastname,
+        date,
+         req.body.mail,
+         req.body.admin,
+         req.body.sexe,
+         req.body.password);
   User.create(user)
-                        .then(() => {
-                            console.log("success")
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })
+      .then(resultat => {
+          res.json(resultat)
+      })
+      .catch(err => {
+          console.log(err)
+          res.json({})
+      })
 }
 
 exports.delete = (req, res) => {
@@ -50,6 +55,29 @@ exports.delete = (req, res) => {
           res.status(401).send({ error: 'Erreur'})
       })
 }
+exports.edit = (req, res) => {
+
+  var date = new Date(req.body.birthday);
+  date.setDate(date.getDate() + 1);
+  const user = new User(
+    req.params.id,
+     req.body.username,
+      req.body.firstname,
+       req.body.lastname,
+        date,
+         req.body.mail,
+         req.body.admin,
+         req.body.sexe,
+         req.body.password);
+  User.editUser(user)
+      .then(resultat => {
+          res.json(resultat)
+      })
+      .catch(err => {
+          console.log(err)
+          res.json({})
+      })
+}
 exports.login = (req,res) => {
   User.login(req.body.username,req.body.password)
   .then(resultat => {
@@ -60,8 +88,7 @@ exports.login = (req,res) => {
         var token = jwt.sign(user, process.env.JWT_SECRET, {
           expiresIn: 60 * 60 * 24
               });
-           /*   decode = jwt.verify(token, process.env.JWT_SECRET);
-              console.log("username : "+decode.id)*/
+
         res.json({token:token,id: resultat2[0].user_id})
       })
      
@@ -76,19 +103,21 @@ exports.logoff = (req, res) => {
   res.json(true)
 }
 exports.getUserById = (req, res) => {
-  console.log("go")
+
   User.getUserById(req.params.id)
   .then(resultat => {
-      console.log("on a pas de soucis")
-      console.log(resultat)
+   
+  
       res.json(resultat)
   })
   .catch(err => {
-    console.log("on a un soucis")
+
     console.log(err)
       res.json({})
   })
 }
+
+
 
 exports.getUserByUsername = (req, res) => {
   User.getUserByUsername(req.params.username)

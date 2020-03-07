@@ -1,6 +1,6 @@
 const con = require("../config/db.js")
 class CommentCategory {
-    constructor(comment_category_id, description, couleur, date) {
+    constructor(comment_category_id, description, couleur) {
         this.comment_category_id = comment_category_id;
         this.description = description;
         this.couleur = couleur;
@@ -23,7 +23,7 @@ module.exports.getAll = () => {
 }
 module.exports.create = (commentCategory) => {
     return new Promise(function (resolve, reject) {
-        con.query('INSERT INTO commentCategory (description, couleur) VALUES (?,?);', [commentCategory.description, commentCategory.couleur], (err, res) => {
+        con.query('INSERT INTO commentCategory (description, color) VALUES (?,?);', [commentCategory.description, commentCategory.couleur], (err, res) => {
             if (err) {
                 reject(err)
             } else {
@@ -55,13 +55,15 @@ module.exports.getCommentCategoryById = (id) => {
         })
     })
 }
-module.exports.editCommentCategoryById = (commentCategory) => {
+module.exports.editCommentCategory = (commentCategory) => {
+ 
     return new Promise((resolve, reject) => {
-        con.query('Update commentCategory Set description = ? , couleur = ? where comment_category_id=?', [commentCategory.description,commentCategory.couleur ,commentCategory.id], (err, res) => {
+        con.query('UPDATE commentCategory set description = ? , color = ? where comment_category_id=?', [commentCategory.description,commentCategory.couleur ,commentCategory.comment_category_id], (err, res) => {
             if (err) {
+                console.log(err)
                 reject(err)
             } else {
-
+                console.log(res)
                 resolve(res)
             }
         })

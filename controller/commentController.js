@@ -63,8 +63,9 @@ exports.delete = (req, res) => {
       })
 }
 exports.edit = (req, res) => {
-  const comment = new Comment(req.params.id,req.body.description,req.body.comment_category,req.body.author,req.body.post);
-  CommentCategory.editCommentById(comment)
+
+  const comment = new Comment(req.params.id,req.body.description,req.body.comment_category,null,null);
+  Comment.editCommentById(comment)
       .then(resultat => {
           res.json(resultat)
       })

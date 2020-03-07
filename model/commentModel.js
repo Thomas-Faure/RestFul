@@ -25,7 +25,7 @@ module.exports.getAll = () => {
 }
 module.exports.getCommentByPostId = (id) => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT * FROM comment com, user u, commentCategory c where com.post=? and com.author = u.user_id and c.comment_category_id = com.comment_category', [id], (err, res) => {
+        con.query('SELECT com.comment_id,com.description,com.comment_category,c.description as category_description,c.color FROM comment com, user u, commentCategory c where com.post=? and com.author = u.user_id and c.comment_category_id = com.comment_category', [id], (err, res) => {
             if (err) {
                 reject(err)
             } else {
@@ -37,7 +37,7 @@ module.exports.getCommentByPostId = (id) => {
 }
 module.exports.getCommentById = (id) => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT * FROM comment com, user u, commentCategory c where comment_id=? and com.author = u.user_id and c.comment_category_id = com.comment_category', [id], (err, res) => {
+        con.query('SELECT com.comment_id,com.description,com.comment_category,c.description as category_description,c.color,c.comment_category_id FROM comment com, user u, commentCategory c where comment_id=? and com.author = u.user_id and c.comment_category_id = com.comment_category', [id], (err, res) => {
             if (err) {
                 reject(err)
             } else {
@@ -72,7 +72,7 @@ module.exports.delete = (comment_id) =>{
 }
 module.exports.editCommentById = (comment) => {
     return new Promise((resolve, reject) => {
-        con.query('UPDATE comment SET description = ? , comment_category = ? and author = ? and post = ? and date = ? where comment_id=? ', [comment.description, comment.comment_category,comment.author, comment.post, comment.date, comment.comment_id], (err, res) => {
+        con.query('UPDATE comment SET description = ? , comment_category = ? where comment_id=? ', [comment.description, comment.comment_category, comment.comment_id], (err, res) => {
             if (err) {
                 reject(err)
             } else {

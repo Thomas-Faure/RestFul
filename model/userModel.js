@@ -1,6 +1,6 @@
 const con = require("../config/db.js")
 class User {
-    constructor(user_id,username, firstname, lastname, birthday, mail, admin,sexe,password) {
+    constructor(user_id, username, firstname, lastname, birthday, mail, admin,sexe,password) {
         this.user_id = user_id;
         this.username = username;
         this.firstname = firstname;
@@ -84,6 +84,38 @@ module.exports.login = (username,password) => {
         })
     })
   }
+
+
+  module.exports.editUser = (user) => {
+
+    
+    if(user.password == undefined){
+        return new Promise((resolve, reject) => {
+            con.query('UPDATE user SET  firstname = ?, lastname = ?, username = ?, mail = ?, sexe = ?, birthday = ?, admin = ? where user_id=?', [user.firstname,user.lastname,user.username,user.mail,user.sexe,user.birthday,user.admin,user.user_id], (err, res) => {
+                if (err) {
+                    reject(err)
+                } else {
+    
+                    resolve(res)
+                }
+            })
+        })
+
+    }else{
+        return new Promise((resolve, reject) => {
+            con.query('UPDATE user SET  firstname = ?, lastname = ?, username = ?, mail = ?, sexe = ?, password = ?, birthday = ?, admin = ? where user_id=?', [user.firstname,user.lastname,user.username,user.mail,user.sexe,user.password,user.birthday,user.admin,user.user_id], (err, res) => {
+                if (err) {
+                    reject(err)
+                } else {
+    
+                    resolve(res)
+                }
+            })
+        })
+        
+    }
+    
+}
 
 
 

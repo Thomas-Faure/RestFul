@@ -6,13 +6,15 @@ exports.create = (req, res) => {
     const couleur = req.body.couleur
 
     const commentCategory = new CommentCategory(1,description,couleur)
-    Comment.create(commentCategory)
-        .then(() => {
-            console.log("success")
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    CommentCategory.create(commentCategory)
+    .then((el) => {
+       
+        res.json({result: true,id :el.insertId})
+      })
+      .catch(err => {
+        console.log(err)
+        res.json({result: false,id : -1})
+      })
 }
 exports.index = (req, res) => {
     CommentCategory.getAll()
@@ -37,7 +39,7 @@ exports.delete = (req, res) => {
 }
 exports.edit = (req, res) => {
     const commentCategory = new CommentCategory(req.params.id,req.body.description, req.body.couleur);
-    CommentCategory.editCommentCategoryById(commentCategory)
+    CommentCategory.editCommentCategory(commentCategory)
         .then(resultat => {
             res.json(resultat)
         })
