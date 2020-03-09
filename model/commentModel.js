@@ -25,7 +25,7 @@ module.exports.getAll = () => {
 }
 module.exports.getCommentByPostId = (id) => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT com.comment_id,com.description,com.comment_category,c.description as category_description,c.color FROM comment com, user u, commentCategory c where com.post=? and com.author = u.user_id and c.comment_category_id = com.comment_category', [id], (err, res) => {
+        con.query('SELECT com.comment_id,com.description,com.comment_category,com.author,com.post,com.date, c.description as category_description,c.color FROM comment com, user u, commentCategory c where com.post=? and com.author = u.user_id and c.comment_category_id = com.comment_category', [id], (err, res) => {
             if (err) {
                 reject(err)
             } else {

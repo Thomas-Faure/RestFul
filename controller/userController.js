@@ -21,7 +21,7 @@ exports.index = (req, res) => {
 
 
 exports.create = (req,res)=>{
- 
+  console.log(req.body)
   var date = new Date(req.body.birthday);
   date.setDate(date.getDate() + 1);
   const user = new User(
@@ -31,7 +31,7 @@ exports.create = (req,res)=>{
        req.body.lastname,
         date,
          req.body.mail,
-         req.body.admin,
+         0,
          req.body.sexe,
          req.body.password);
   User.create(user)
