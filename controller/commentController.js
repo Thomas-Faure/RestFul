@@ -1,18 +1,15 @@
 const Comment = require("../model/commentModel")
 const User = require("../model/userModel")
+const jwt = require('jsonwebtoken');
 exports.create = (req, res) => {
-
+  console.log(req.body)
   const description = req.body.description
-  const comment_category = 1
-  const username = req.body.username
-  const post = req.body.post
-
-
-  User.getUserByUsername(username)
-  .then(resultat => {
- 
-    const author = resultat[0].user_id
-    const comment = new Comment(1, description, comment_category, author, post)
+  const category = req.body.category
+  const post_id = req.params.id
+  var token = req.token;
+  if (token) {
+    decode = jwt.verify(token, process.env.JWT_SECRET);
+    const comment = new Comment(1, description, category, decode.id, post_id)
     Comment.create(comment)
       .then(() => {
         console.log("success")
@@ -23,7 +20,14 @@ exports.create = (req, res) => {
         res.json({result: false})
       })
 
-  })
+
+   
+
+  } else {
+      res.json({result:false})
+  }
+
+
 
 }
 

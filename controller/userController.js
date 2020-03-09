@@ -10,7 +10,7 @@ exports.index = (req, res) => {
        
  
         delete resultat.password;
-      
+       
         res.json(resultat)
     })
     .catch(err => {
@@ -36,11 +36,14 @@ exports.create = (req,res)=>{
          req.body.password);
   User.create(user)
       .then(resultat => {
-          res.json(resultat)
+        console.log(resultat["affectedRows"])
+        if(resultat["affectedRows"] == 1){
+          res.json({result : true})
+        }
+        res.json({result : false})
       })
       .catch(err => {
-          console.log(err)
-          res.json({})
+        res.json({result : false})
       })
 }
 
