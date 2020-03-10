@@ -4,16 +4,33 @@ exports.create = (req, res) => {
 
     const author = req.body.author
     const post = req.body.post
-    const like = true
-
+    const like = 1
     const opinion = new Opinion(author,post,like)
-    Comment.create(opinion)
-        .then(() => {
-            console.log("success")
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    Opinion.getOpinionByUserByPost(author, post).then(result => {
+        if(result.length == 0){
+            //Not liked
+            Opinion.create(opinion)
+                .then(() => {
+                    res.json({result: "liked"})
+                    console.log("success")
+                })
+                .catch(err => {
+                    res.json({result: "err"})
+                    console.log(err)
+                })
+        } else {
+            //already liked
+            Opinion.delete(opinion)
+                .then(() => {
+                    res.json({result: "deleted"})
+                    console.log("success")
+                })
+                .catch(err => {
+                    res.json({result: "err"})
+                    console.log(err)
+                })
+        }
+    })
 }
 exports.index = (req, res) => {
     Opinion.getAll()

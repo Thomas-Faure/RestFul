@@ -60,7 +60,7 @@ module.exports.getOpinionByUserByPost = (userid, postId) => {
 
 module.exports.create = (opinion) => {
     return new Promise(function (resolve, reject) {
-        con.query('INSERT INTO opinion (author, post,like) VALUES (?,?,?);', [opinion.author, opinion.post, opinion.like], (err, res) => {
+        con.query('INSERT INTO opinion VALUES (?,?,?);', [opinion.author, opinion.post, opinion.like], (err, res) => {
             if (err) {
                 reject(err)
             } else {
