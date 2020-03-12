@@ -13,7 +13,7 @@ class Post {
 module.exports = Post
 module.exports.getAll = () => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT post_id, title, description, post_category, p.author as "author",username,url_image,date, (SELECT Count(*) FROM opinion where opinion.post=p.post_id) as "like", (SELECT COUNT(*) FROM comment WHERE post=p.post_id) as "comment" FROM post p,user u, opinion o, reportPost r where u.user_id=p.author GROUP BY p.post_id ORDER BY p.date DESC', (err, res) => {
+        con.query('SELECT post_id, title, description, post_category, p.author as "author",username,url_image,date, (SELECT Count(*) FROM opinion where opinion.post=p.post_id) as "like", (SELECT COUNT(*) FROM comment WHERE post=p.post_id) as "comment" FROM post p, user u Where u.user_id = p.author ORDER BY p.date DESC', (err, res) => {
             if (err) {
                 reject(err)
             } else {
@@ -57,10 +57,22 @@ module.exports.delete = (post_id) => {
         })
     })
 }
-
 module.exports.editPost = (post) => {
     return new Promise((resolve, reject) => {
         con.query('UPDATE post SET  title = ?, description = ?, post_category = ?, url_image = ? where post_id=?', [post.title,post.description,post.post_category,post.url_image,post.post_id], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+
+                resolve(res)
+            }
+        })
+    })
+}
+
+module.exports.editImageUrlByPostId = (post_id,url) => {
+    return new Promise((resolve, reject) => {
+        con.query('UPDATE post SET  url_image = ? where post_id=?', [url,post_id], (err, res) => {
             if (err) {
                 reject(err)
             } else {
