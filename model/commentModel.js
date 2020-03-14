@@ -13,7 +13,7 @@ class Comment {
 module.exports = Comment
 module.exports.getAll = () => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT * FROM comment order by comment_id desc', (err, res) => {
+        con.query('SELECT comment_id,  c.description, comment_category, c.author as "author", cc.description as "category_description",username,date,post, (SELECT Count(*) FROM rateComment where rateComment.comment=c.comment_id and like = 1) as "like", (SELECT Count(*) FROM rateComment where rateComment.comment=c.comment_id and like = 0) as "dislike" FROM comment c, user u, commentCategory cc Where u.user_id = c.author and cc.comment_category_id = c.comment_category ORDER BY c.date ASC', (err, res) => {
             if (err) {
                 reject(err)
             } else {
@@ -25,7 +25,7 @@ module.exports.getAll = () => {
 }
 module.exports.getCommentByPostId = (id) => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT com.comment_id,com.description,com.comment_category,com.author,com.post,com.date, c.description as category_description,c.color FROM comment com, user u, commentCategory c where com.post=? and com.author = u.user_id and c.comment_category_id = com.comment_category order by comment_id asc', [id], (err, res) => {
+        con.query('SELECT comment_id,  c.description, comment_category, c.author as "author", cc.description as "category_description",username,date,post, (SELECT Count(*) FROM rateComment where rateComment.comment=c.comment_id and like = 1) as "like", (SELECT Count(*) FROM rateComment where rateComment.comment=c.comment_id and like = 0) as "dislike" FROM comment c, user u, commentCategory cc Where u.user_id = c.author and cc.comment_category_id = c.comment_category and c.post = ? ORDER BY c.date ASC', [id], (err, res) => {
             if (err) {
                 reject(err)
             } else {
