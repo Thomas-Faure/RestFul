@@ -58,8 +58,18 @@ exports.create = (req, res) => {
 }
 
 exports.index = (req, res) => {
-
   Post.getAll()
+    .then(resultat => {
+      res.json(resultat)
+    })
+    .catch(err => {
+      console.log(err)
+      res.json({})
+    })
+}
+
+exports.bestAnswer = (req, res) => {
+  Post.getBestAnswer()
     .then(resultat => {
       res.json(resultat)
     })
