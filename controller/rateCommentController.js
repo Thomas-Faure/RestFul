@@ -11,7 +11,7 @@ exports.create = (req, res) => {
             //Not liked or disliked
             Rate.create(rate)
                 .then(() => {
-                    res.json({result: like})
+                    res.json({result: "rated"})
                     console.log("rated")
                 })
                 .catch(err => {
@@ -24,7 +24,7 @@ exports.create = (req, res) => {
                 //remove like or dislike
                 Rate.delete(rate)
                     .then(() => {
-                        res.json({result: -1})
+                        res.json({result: "deleted"})
                         console.log("deleted")
                     })
                     .catch(err => {
@@ -34,7 +34,7 @@ exports.create = (req, res) => {
             } else {
                 Rate.edit(rate)
                     .then(() => {
-                        res.json({result: like})
+                        res.json({result: "updated"})
                         console.log("edited")
                     })
                     .catch(err => {
