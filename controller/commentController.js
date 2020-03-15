@@ -31,6 +31,12 @@ exports.create = (req, res) => {
 
 }
 
+exports.validate = (req,res) =>{
+  Comment.updateValidationByCommentId(req.params.id,1)
+  .then(res.json({result:true}))
+  res.json({result:false})
+}
+
 exports.index = (req, res) => {
 
   Comment.getAll()

@@ -19,6 +19,17 @@ module.exports.getReportCommentByUser = (id) => {
         })
     })
 }
+module.exports.getCountReportByComments = () =>{
+    return new Promise((resolve, reject) => {
+        con.query('SELECT count(r.comment) as nbReport,r.comment, c.description FROM `reportComment` r,comment c where r.comment = c.comment_id and c.validate = 0 group by r.comment order by count(r.comment) desc', [], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
 module.exports.getReportCommentByUserByComment = (userid, commentId) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM reportComment where author=? and comment=?', [userid, commentId], (err, res) => {

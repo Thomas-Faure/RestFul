@@ -4,16 +4,47 @@ exports.create = (req, res) => {
 
     const author = req.body.author
     const comment = req.body.comment
-    const like = true
+    const like = req.body.like
+    const rate = new Rate(author,comment,like)
+    Rate.getRateByUserByComment(author, comment).then(result => {
+        if(result.length == 0){
+            //Not liked or disliked
+            Rate.create(rate)
+                .then(() => {
+                    res.json({result: "rated"})
+                    console.log("rated")
+                })
+                .catch(err => {
+                    res.json({result: "err"})
+                    console.log(err)
+                })
+        } else {
+            //already liked or disliked
+            if(result[0].like == like) {
+                //remove like or dislike
+                Rate.delete(rate)
+                    .then(() => {
+                        res.json({result: "deleted"})
+                        console.log("deleted")
+                    })
+                    .catch(err => {
+                        res.json({result: "err"})
+                        console.log(err)
+                    })
+            } else {
+                Rate.edit(rate)
+                    .then(() => {
+                        res.json({result: "updated"})
+                        console.log("edited")
+                    })
+                    .catch(err => {
+                        res.json({result: "err"})
+                        console.log(err)
+                    })
+            }
 
-    const rateComment = new RateComment(author,comment,like)
-    Rate.create(rateComment)
-        .then(() => {
-            console.log("success")
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        }
+    })
 }
 exports.index = (req, res) => {
     Rate.getAll()

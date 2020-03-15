@@ -30,6 +30,13 @@ exports.getPostByIdByToken = (req, res) => {
     
   }
 
+
+  exports.getCountReports = (req, res) =>{
+    Comment.getCountReportByComments()
+    .then(resultat=>{
+      res.json(resultat)
+    })
+  }
 exports.report = (req, res) => {
 
     let comment_id = req.body.comment_id

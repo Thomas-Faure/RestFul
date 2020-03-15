@@ -12,6 +12,13 @@ exports.index = (req, res) => {
     })
 }
 
+exports.getCountReports = (req, res) =>{
+  Post.getCountReportByPosts()
+  .then(resultat=>{
+    res.json(resultat)
+  })
+}
+
 
 exports.getPostByIdByToken = (req, res) => {
   var token = req.token;

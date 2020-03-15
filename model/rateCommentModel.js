@@ -49,7 +49,7 @@ module.exports.getRateByUserByComment = (userid, commentId) => {
 }
 module.exports.create = (rate) => {
     return new Promise(function (resolve, reject) {
-        con.query('INSERT INTO rateComment (author, post,like) VALUES (?,?,?);', [rate.author, rate.post, rate.like], (err, res) => {
+        con.query('INSERT INTO rateComment VALUES (?,?,?);', [rate.author, rate.comment, rate.like], (err, res) => {
             if (err) {
                 reject(err)
             } else {
@@ -60,7 +60,7 @@ module.exports.create = (rate) => {
 }
 module.exports.delete = (rate) => {
     return new Promise(function (resolve, reject) {
-        con.query('DELETE FROM rateComment WHERE author = ? and post = ?', [rate.author, rate.post], (err, res) => {
+        con.query('DELETE FROM rateComment WHERE author = ? and comment = ?', [rate.author, rate.comment], (err, res) => {
             if (err) {
                 reject(err)
             } else {
@@ -72,7 +72,7 @@ module.exports.delete = (rate) => {
 
 module.exports.edit = (rate) => {
     return new Promise(function (resolve, reject) {
-        con.query('UPDATE rateComment SET like = ? WHERE author = ? and comment = ?', [rate.like, rate.author, rate.comment], (err, res) => {
+        con.query('UPDATE rateComment SET `like` = ? WHERE author = ? and comment = ?', [rate.like, rate.author, rate.comment], (err, res) => {
             if (err) {
                 reject(err)
             } else {

@@ -13,9 +13,10 @@ const cookieParser = require("cookie-parser")
 const bearerToken = require('express-bearer-token');
 app.use(bearerToken());
 app.use(cors());
-app.use(bodyParser.json());
+
 app.use(cookieParser())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '10mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 // Using pug template engine
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")

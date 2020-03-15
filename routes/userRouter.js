@@ -11,7 +11,7 @@ router.get('/username/:username',userController.getUserByUsername);
 router.post('/create',userController.create);
 router.post('/:id/edit',userController.edit)
 router.delete('/:id/delete',userController.delete)
-router.get("/list",Auth,userController.index)
+router.get("/list",userController.index)
 router.post("/login", userController.login)
 router.get("/verify",function(req, res, next) {
     var token = req.token;

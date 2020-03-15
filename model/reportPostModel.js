@@ -20,6 +20,18 @@ module.exports.getAllByPost = (post_id) => {
         })
     })
 }
+
+module.exports.getCountReportByPosts = () =>{
+    return new Promise((resolve, reject) => {
+        con.query('SELECT count(r.post) as nbReport,r.post, p.title FROM `reportPost` r,post p where r.post = p.post_id and p.validate = 0 group by r.post order by count(r.post) desc', [], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
 module.exports.getAll = () => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM reportPost', (err, res) => {
