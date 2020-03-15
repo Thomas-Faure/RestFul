@@ -15,8 +15,8 @@ app.use(bearerToken());
 app.use(cors());
 
 app.use(cookieParser())
-app.use(bodyParser.json({limit: '10mb', extended: true}))
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
+app.use(bodyParser.json({limit: '100mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '100mb', extended: true}))
 // Using pug template engine
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
@@ -26,7 +26,7 @@ app.use(function(req, res, next) {
   req.con = con
   next()
 })
-
+app.use(express.static('public'));
 // parsing body request
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

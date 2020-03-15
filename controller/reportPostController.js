@@ -64,7 +64,7 @@ exports.getPostById = (req, res) => {
 }
 
 exports.getReportCountByPostId = (req, res) => {
- 
+  console.log("on try")
   Post.getAllByPost(req.params.id)
   .then(resultat => {
       res.json(resultat.length)
@@ -75,41 +75,40 @@ exports.getReportCountByPostId = (req, res) => {
   })
 }
 exports.report = (req, res) => {
- // res.json("oui")
- let post_id = req.body.post_id
-  var token = req.token;
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, function (err, token_data) {
-      if (err) {
-        res.json({result: null})
-      } else {
-        let decode = jwt.verify(token, process.env.JWT_SECRET);
-        let user_id = decode.id
-        var report = new Post(user_id,post_id,1)
-        Post.getReport(post_id,3).then(result =>{
-          let nbResult = result.length 
-          if(nbResult==0){    
-            Post.create(report)
-            .then((el) => {
-              res.json({result: true})
-            })
-          }else{
-            //on a deja voté
-            Post.delete(report)
-            .then((el) => {
-              res.json({result: false})
-            })
-          }
-        })
-      }
-    });
-
-  } else {
-    res.json({result: null})
-  }
-  
-
-
-}
-  
+  // res.json("oui")
+  let post_id = req.body.post_id
+   var token = req.token;
+   if (token) {
+     jwt.verify(token, process.env.JWT_SECRET, function (err, token_data) {
+       if (err) {
+         res.json({result: null})
+       } else {
+         let decode = token_data
+         let user_id = decode.id
+         var report = new Post(user_id,post_id,1)
+         Post.getReport(post_id,user_id).then(result =>{
+           let nbResult = result.length 
+           if(nbResult==0){    
+             Post.create(report)
+             .then((el) => {
+               res.json({result: true})
+             })
+           }else{
+             //on a deja voté
+             Post.delete(report)
+             .then((el) => {
+               res.json({result: false})
+             })
+           }
+         })
+       }
+     });
+ 
+   } else {
+     res.json({result: null})
+   }
+   
+ 
+ 
+ }
 

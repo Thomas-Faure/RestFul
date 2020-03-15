@@ -37,19 +37,20 @@ exports.getPostByIdByToken = (req, res) => {
       res.json(resultat)
     })
   }
-exports.report = (req, res) => {
+  exports.report = (req, res) => {
 
     let comment_id = req.body.comment_id
      var token = req.token;
+     console.log("reporting")
      if (token) {
        jwt.verify(token, process.env.JWT_SECRET, function (err, token_data) {
          if (err) {
            res.json({result: null})
          } else {
-           let decode = jwt.verify(token, process.env.JWT_SECRET);
+           let decode = token_data
            let user_id = decode.id
            var report = new Comment(user_id,comment_id,1)
-           Comment.getReport(comment_id,3).then(result =>{
+           Comment.getReport(comment_id,user_id).then(result =>{
              let nbResult = result.length 
              if(nbResult==0){    
                Comment.create(report)
