@@ -9,23 +9,22 @@ const cookieParser = require('cookie-parser')
 exports.create = (req, res) => {
 
   const title = req.body.title
-  console.log(title)
+
   const category = req.body.category
-  console.log(category)
+
   const description = req.body.description
-  console.log(description)
+
   var token = req.token;
   if (token) {
     decode = jwt.verify(token, process.env.JWT_SECRET);
-    const post = new Post(1, title, description, category, decode.id, "test", new Date().toISOString().slice(0, 19).replace('T', ' '))
+    const post = new Post(1, title, description, category, decode.id, "", new Date().toISOString().slice(0, 19).replace('T', ' '))
     Post.create(post)
       .then((el) => {
         
-        let extension = req.body.extension
-        console.log(extension)
-        console.log(extension.length)
+        let extension = req.body.ext
+    
         let data = req.body.data
-        console.log(data.length)
+      
         if(extension.length > 0 && data.length > 0){
 
           let base64String = data;
@@ -92,14 +91,25 @@ exports.getPostById = (req, res) => {
 
 exports.delete = (req, res) => {
   const id = req.params.id
+  Post.getPostById(id)
+  .then(post => {
+
+    
   Post.delete(id)
       .then(resultat => {
+        if(post[0].url_image.length>0){
+          //on supprime l'image du serveur
+          fs.unlink(post[0].url_image,()=>{
+            console.log("file deleted")
+          })
+        }
           res.json(resultat)
       })
       .catch(err => {
           console.log(err)
           res.json({})
       })
+    })
 }
 exports.edit = (req, res) => {
   const post = new Post(req.params.id, req.body.title,req.body.description,req.body.category,null," ",null)

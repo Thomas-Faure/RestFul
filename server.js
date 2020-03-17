@@ -26,7 +26,7 @@ app.use(function(req, res, next) {
   req.con = con
   next()
 })
-app.use(express.static('public'));
+app.use('/public', express.static('public'));
 // parsing body request
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

@@ -63,7 +63,6 @@ module.exports.editCommentCategory = (commentCategory) => {
                 console.log(err)
                 reject(err)
             } else {
-                console.log(res)
                 resolve(res)
             }
         })
