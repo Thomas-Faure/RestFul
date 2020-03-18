@@ -1,5 +1,36 @@
 const Comment = require("../model/reportCommentModel")
 const jwt = require('jsonwebtoken');
+
+exports.getCommentsReportByPost = (req,res)=>{
+  var token = req.token;
+  if(token){
+      jwt.verify(token, process.env.JWT_SECRET, function (err, token_data) 
+      {
+          if (err) {
+              res.json([])
+            }else{
+              let decode = jwt.verify(token, process.env.JWT_SECRET);
+              let user_id = decode.id
+              console.log(user_id+ " "+req.params.id)
+              Comment.getReportsByPost(req.params.id,user_id)
+              .then(resultat => {
+                  res.json(resultat)
+              })
+              .catch(err => {
+              console.log(err)
+                  res.json({})
+              })
+
+
+            }
+
+      }
+      )
+  }else{
+      res.json([])
+  }
+
+}
 exports.getPostByIdByToken = (req, res) => {
     var token = req.token;
     if(token){

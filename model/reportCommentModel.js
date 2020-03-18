@@ -43,6 +43,18 @@ module.exports.getReportCommentByUserByComment = (userid, commentId) => {
     })
 }
 
+module.exports.getReportsByPost = (post_id, author) => {
+    return new Promise((resolve, reject) => {
+        con.query('SELECT r.author,r.comment,r.report FROM reportComment r, comment c where c.comment_id=r.comment and c.post=? and r.author=?', [post_id, author], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+            
+                resolve(res)
+            }
+        })
+    })
+}
 module.exports.getReport = (comment, author) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM reportComment where comment=? and author = ?', [comment, author], (err, res) => {
