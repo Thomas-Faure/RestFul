@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express")
 const cors = require('cors');
+const fs = require('fs')
 const bodyParser = require("body-parser");
 const jwt = require('jsonwebtoken');
 const app = express()
@@ -8,6 +9,9 @@ var methodOverride = require("method-override")
 const path = require("path")
 const con = require("./config/db.js")
 const cookieParser = require("cookie-parser")
+const http = require('http')
+
+const https = require('https')
 
 
 const bearerToken = require('express-bearer-token');
@@ -26,6 +30,7 @@ app.use(function(req, res, next) {
   req.con = con
   next()
 })
+app.use('/.well-known/acme-challenge', express.static('certif'));
 app.use('/public', express.static('public'));
 // parsing body request
 app.use(express.json())
@@ -76,7 +81,14 @@ app.use(function(req, res, next){
   res.type('txt').send('Not found');
 });
 
-// starting server
-app.listen(2000, function() {
-  console.log("server listening on port 2000")
+
+
+
+
+https.createServer({
+  key: fs.readFileSync('/etc/letsencrypt/live/thomasfaure.fr/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/thomasfaure.fr/cert.pem'),
+  ca: fs.readFileSync('/etc/letsencrypt/live/thomasfaure.fr/chain.pem')
+}, app).listen(443, () => {
+  console.log('Listening...')
 })

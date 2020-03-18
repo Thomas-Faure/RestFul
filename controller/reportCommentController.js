@@ -41,7 +41,7 @@ exports.getPostByIdByToken = (req, res) => {
 
     let comment_id = req.body.comment_id
      var token = req.token;
-     console.log("reporting")
+
      if (token) {
        jwt.verify(token, process.env.JWT_SECRET, function (err, token_data) {
          if (err) {

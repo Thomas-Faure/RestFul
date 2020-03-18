@@ -21,7 +21,7 @@ exports.index = (req, res) => {
 
 
 exports.create = (req,res)=>{
-  console.log(req.body)
+  
   var date = new Date(req.body.birthday);
   date.setDate(date.getDate() + 1);
   const user = new User(
@@ -36,7 +36,7 @@ exports.create = (req,res)=>{
          req.body.password);
   User.create(user)
       .then(resultat => {
-        console.log(resultat["affectedRows"])
+        
         if(resultat["affectedRows"] == 1){
           res.json({result : true})
         }

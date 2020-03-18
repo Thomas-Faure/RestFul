@@ -64,7 +64,7 @@ exports.getPostById = (req, res) => {
 }
 
 exports.getReportCountByPostId = (req, res) => {
-  console.log("on try")
+ 
   Post.getAllByPost(req.params.id)
   .then(resultat => {
       res.json(resultat.length)

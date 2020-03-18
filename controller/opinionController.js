@@ -1,8 +1,13 @@
 const Opinion = require("../model/opinionModel")
-
+const jwt = require('jsonwebtoken');
 exports.create = (req, res) => {
 
-    const author = req.body.author
+    var token = req.token;
+
+    if (token) {
+      jwt.verify(token, process.env.JWT_SECRET, function (err, token_data) {
+
+    const author = token_data.id
     const post = req.body.post
     const like = 1
     const opinion = new Opinion(author,post,like)
@@ -31,6 +36,15 @@ exports.create = (req, res) => {
                 })
         }
     })
+
+
+      })
+    }else{
+        res.json({result: "error"})
+    }
+
+
+    
 }
 exports.index = (req, res) => {
     Opinion.getAll()
@@ -71,7 +85,6 @@ exports.edit = (req, res) => {
 }
 
 exports.getOpinionsByUser = (req, res) => {
-
     Opinion.getOpinionsByUser(req.params.id)
         .then(resultat => {
             res.json(resultat)
@@ -83,7 +96,6 @@ exports.getOpinionsByUser = (req, res) => {
 }
 
 exports.getOpinionsByPost = (req, res) => {
-
     Opinion.getOpinionsByPost(req.params.id)
         .then(resultat => {
             res.json(resultat)
@@ -93,7 +105,6 @@ exports.getOpinionsByPost = (req, res) => {
             res.json({})
         })
 }
-
 exports.getOpinionByUserByPost = (req, res) => {
     const author = req.params.author
     const post = req.params.post

@@ -6,15 +6,15 @@ module.exports = (req, res, next) => {
   try {
     
     var token = req.token;
-    console.log(token)
+   
     if (token) {
-      console.log('oui token')
+    
       jwt.verify(token, process.env.JWT_SECRET, function (err, token_data) {
         if (err) {
          
           throw 'Invalid token';
         } else {
-          console.log("pas erreur")
+       
           next()
         }
       });

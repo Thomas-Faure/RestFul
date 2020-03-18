@@ -1,6 +1,6 @@
 const con = require("../config/db.js")
 class Post {
-    constructor(post_id, title, description, post_category, author, url_image, date) {
+    constructor(post_id, title, description, post_category, author, url_image, date,location) {
         this.post_id = post_id;
         this.title = title;
         this.description = description;
@@ -8,12 +8,13 @@ class Post {
         this.author = author;
         this.url_image = url_image;
         this.date = date;
+        this.location = location
     }
 }
 module.exports = Post
 module.exports.getAll = () => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT post_id, title, description, post_category, p.author as "author",username,url_image,date, (SELECT Count(*) FROM opinion where opinion.post=p.post_id) as "like", (SELECT COUNT(*) FROM comment WHERE post=p.post_id) as "comment" FROM post p, user u Where u.user_id = p.author ORDER BY p.date DESC', (err, res) => {
+        con.query('SELECT post_id, title, description,location, post_category, p.author as "author",username,url_image,date, (SELECT Count(*) FROM opinion where opinion.post=p.post_id) as "like", (SELECT COUNT(*) FROM comment WHERE post=p.post_id) as "comment" FROM post p, user u Where u.user_id = p.author ORDER BY p.date DESC', (err, res) => {
             if (err) {
                 reject(err)
             } else {
@@ -50,7 +51,7 @@ module.exports.getPostById = (id) => {
 }
 module.exports.create = (post) => {
     return new Promise(function (resolve, reject) {
-        con.query('INSERT INTO post (title,description,post_category,author,url_image,date) VALUES (?,?,?,?,?,?);', [post.title, post.description, post.post_category, post.author, post.url_image, post.date], (err, res) => {
+        con.query('INSERT INTO post (title,description,post_category,author,url_image,date,location,anonymous) VALUES (?,?,?,?,?,?,?,?);', [post.title, post.description, post.post_category, post.author, post.url_image, post.date,post.location,0], (err, res) => {
             if (err) {
                 reject(err)
             } else {

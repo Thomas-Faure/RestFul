@@ -11,13 +11,13 @@ exports.create = (req, res) => {
   const title = req.body.title
 
   const category = req.body.category
-
+  const location = req.body.location
   const description = req.body.description
 
   var token = req.token;
   if (token) {
     decode = jwt.verify(token, process.env.JWT_SECRET);
-    const post = new Post(1, title, description, category, decode.id, "", new Date().toISOString().slice(0, 19).replace('T', ' '))
+    const post = new Post(1, title, description, category, decode.id, "", new Date().toISOString().slice(0, 19).replace('T', ' '),location)
     Post.create(post)
       .then((el) => {
         
@@ -30,7 +30,7 @@ exports.create = (req, res) => {
           let base64String = data;
           let base64Image = base64String.split(';base64,').pop();
           let fileName = "public/"+el.insertId+"."+extension
-          console.log(fileName)
+        
   
           fs.writeFile(fileName, base64Image,{ encoding: 'base64',flag: 'wx' }, function(err) {
             if (err){
