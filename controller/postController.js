@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser')
 exports.create = (req, res) => {
 
   const title = req.body.title
-
+  const anonymous = req.body.anonymous
   const category = req.body.category
   const location = req.body.location
   const description = req.body.description
@@ -17,7 +17,7 @@ exports.create = (req, res) => {
   var token = req.token;
   if (token) {
     decode = jwt.verify(token, process.env.JWT_SECRET);
-    const post = new Post(1, title, description, category, decode.id, "", new Date().toISOString().slice(0, 19).replace('T', ' '),location)
+    const post = new Post(1, title, description, category, decode.id, "", new Date().toISOString().slice(0, 19).replace('T', ' '),location,anonymous)
     Post.create(post)
       .then((el) => {
         
@@ -59,6 +59,15 @@ exports.create = (req, res) => {
 exports.index = (req, res) => {
   Post.getAll()
     .then(resultat => {
+      resultat.forEach(element => {
+        if(element.anonymous == 1){
+          element.username="anonymous"
+          element.author=-1
+
+          element.location="somewhere"
+        }
+      });
+      delete resultat.anonymous
       res.json(resultat)
     })
     .catch(err => {
