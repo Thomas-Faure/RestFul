@@ -61,9 +61,7 @@ exports.index = (req, res) => {
     .then(resultat => {
       resultat.forEach(element => {
         if(element.anonymous == 1){
-          element.username="anonymous"
           element.author=-1
-
           element.location="somewhere"
         }
       });
