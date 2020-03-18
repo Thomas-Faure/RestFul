@@ -1,6 +1,6 @@
 const con = require("../config/db.js")
 class Post {
-    constructor(post_id, title, description, post_category, author, url_image, date,location) {
+    constructor(post_id, title, description, post_category, author, url_image, date,location,anonymous) {
         this.post_id = post_id;
         this.title = title;
         this.description = description;
@@ -9,6 +9,7 @@ class Post {
         this.url_image = url_image;
         this.date = date;
         this.location = location
+        this.anonymous = anonymous
     }
 }
 module.exports = Post
@@ -51,7 +52,7 @@ module.exports.getPostById = (id) => {
 }
 module.exports.create = (post) => {
     return new Promise(function (resolve, reject) {
-        con.query('INSERT INTO post (title,description,post_category,author,url_image,date,location,anonymous) VALUES (?,?,?,?,?,?,?,?);', [post.title, post.description, post.post_category, post.author, post.url_image, post.date,post.location,0], (err, res) => {
+        con.query('INSERT INTO post (title,description,post_category,author,url_image,date,location,anonymous) VALUES (?,?,?,?,?,?,?,?);', [post.title, post.description, post.post_category, post.author, post.url_image, post.date,post.location,post.anonymous], (err, res) => {
             if (err) {
                 reject(err)
             } else {
