@@ -13,7 +13,7 @@ class Post {
 module.exports = Post
 module.exports.getAll = () => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT post_id, title, description, post_category, p.author as "author",username,url_image,date, (SELECT Count(*) FROM opinion where opinion.post=p.post_id) as "like", (SELECT COUNT(*) FROM comment WHERE post=p.post_id) as "comment" FROM post p, user u Where u.user_id = p.author ORDER BY p.date DESC', (err, res) => {
+        con.query('SELECT post_id, title, p.description, post_category,couleur, p.author as "author",username,p.url_image,pc.url_image as "url_categ",date, (SELECT Count(*) FROM opinion where opinion.post=p.post_id) as "like", (SELECT COUNT(*) FROM comment WHERE post=p.post_id) as "comment" FROM post p, user u, postCategory pc Where u.user_id = p.author and pc.post_category_id = p.post_category ORDER BY p.date DESC', (err, res) => {
             if (err) {
                 reject(err)
             } else {
