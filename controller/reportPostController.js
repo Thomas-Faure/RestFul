@@ -38,8 +38,6 @@ exports.getPostByIdByToken = (req, res) => {
               console.log(err)
                   res.json({})
               })
-
-
             }
 
       }
@@ -50,7 +48,33 @@ exports.getPostByIdByToken = (req, res) => {
   
 }
 
+exports.getPostsReportedByUserToken= (req,res)=>{
+  var token = req.token;
+  if(token){
+      jwt.verify(token, process.env.JWT_SECRET, function (err, token_data) 
+      {
+          if (err) {
+              res.json([])
+            }else{
+              let decode = jwt.verify(token, process.env.JWT_SECRET);
+              let user_id = decode.id
+              Post.getReportByUser(user_id)
+              .then(resultat => {
+                  res.json(resultat)
+              })
+              .catch(err => {
+              console.log(err)
+                  res.json({})
+              })
+            }
 
+      }
+      )
+  }else{
+      res.json([])
+  }
+
+}
 exports.getPostById = (req, res) => {
 
   Post.getReport(req.params.post,req.params.author)

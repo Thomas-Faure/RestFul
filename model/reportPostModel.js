@@ -44,6 +44,19 @@ module.exports.getAll = () => {
         })
     })
 }
+
+module.exports.getReportByUser = (author) => {
+    return new Promise((resolve, reject) => {
+        con.query('SELECT * FROM reportPost where author = ?', [author], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+             
+                resolve(res)
+            }
+        })
+    })
+}
 module.exports.getReport = (post, author) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM reportPost where post=? and author = ?', [post, author], (err, res) => {
