@@ -14,7 +14,7 @@ class Post {
 module.exports = Post
 module.exports.getAll = () => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT post_id, title,location, p.description, post_category,couleur, p.author as "author",username,p.url_image,pc.url_image as "url_categ",date, (SELECT Count(*) FROM opinion where opinion.post=p.post_id) as "like", (SELECT COUNT(*) FROM comment WHERE post=p.post_id) as "comment" FROM post p, user u, postCategory pc Where u.user_id = p.author and pc.post_category_id = p.post_category ORDER BY p.date DESC', (err, res) => {
+        con.query('SELECT sr1.*, IFNULL(u.user_id,-1) AS user_id, IFNULL(u.username,"anonyme") FROM (SELECT post_id, title,location, p.description, post_category,couleur, p.author as "author",p.url_image,pc.url_image as "url_categ",date, (SELECT Count(*) FROM opinion where opinion.post=p.post_id) as "like", (SELECT COUNT(*) FROM comment WHERE post=p.post_id) as "comment", p.anonymous FROM post p, postCategory pc Where pc.post_category_id = p.post_category ORDER BY p.date DESC) sr1 Left JOIN (Select username, user_id FROM user u) u ON u.user_id = sr1.author AND anonymous = 0 ORDER BY sr1.date DESC', (err, res) => {
             if (err) {
                 reject(err)
             } else {

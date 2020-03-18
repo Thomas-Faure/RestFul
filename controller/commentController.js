@@ -7,9 +7,10 @@ exports.create = (req, res) => {
   const category = req.body.category
   const post_id = req.params.id
   var token = req.token;
+  var anonyme = req.body.anonyme
   if (token) {
     decode = jwt.verify(token, process.env.JWT_SECRET);
-    const comment = new Comment(1, description, category, decode.id, post_id)
+    const comment = new Comment(1, description, category, decode.id, post_id, anonyme)
     Comment.create(comment)
       .then(() => {
         console.log("success")
@@ -74,7 +75,7 @@ exports.delete = (req, res) => {
 }
 exports.edit = (req, res) => {
 
-  const comment = new Comment(req.params.id,req.body.description,req.body.comment_category,null,null);
+  const comment = new Comment(req.params.id,req.body.description,req.body.comment_category,null,null,null);
   Comment.editCommentById(comment)
       .then(resultat => {
           res.json(resultat)
