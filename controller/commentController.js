@@ -8,9 +8,10 @@ exports.create = (req, res) => {
   const post_id = req.params.id
   var token = req.token;
   var anonyme = req.body.anonyme
+  console.log(anonyme)
   if (token) {
     decode = jwt.verify(token, process.env.JWT_SECRET);
-    const comment = new Comment(1, description, category, decode.id, post_id, anonyme)
+    const comment = new Comment(1, description, category, decode.id, post_id,new Date().toISOString().slice(0, 19).replace('T', ' '), anonyme)
     Comment.create(comment)
       .then(() => {
         console.log("success")
