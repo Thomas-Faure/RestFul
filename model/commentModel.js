@@ -12,6 +12,19 @@ class Comment {
     }
 }
 module.exports = Comment
+module.exports.getCommentsIdOfUserByPostId = (userid,postid)=>{
+    return new Promise((resolve, reject) => {
+        con.query('select c.comment_id from comment c where c.post=? and c.author=?',[postid,userid],(err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+               
+                resolve(res)
+            }
+        })
+    })
+
+}
 module.exports.getAll = () => {
     return new Promise((resolve, reject) => {
         con.query('SELECT sr1.*, IFNULL(u.user_id,-1) AS user_id, IFNULL(u.username,"anonyme") AS username FROM (SELECT comment_id, c.description, comment_category, c.author as "author", cc.description as "category_description",date,post, (SELECT Count(*) FROM rateComment where rateComment.comment=c.comment_id and rateComment.like = 1) as "like", (SELECT Count(*) FROM rateComment where rateComment.comment=c.comment_id and rateComment.like = 0) as "dislike", cc.color,c.anonyme FROM comment c, commentCategory cc Where cc.comment_category_id = c.comment_category) sr1 Left JOIN (Select username, user_id FROM user u) u ON u.user_id = sr1.author AND anonyme = 0 ORDER BY sr1.date ASC', (err, res) => {

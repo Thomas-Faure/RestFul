@@ -56,6 +56,28 @@ exports.create = (req, res) => {
   }
 }
 
+exports.isOwner = (req,res) =>{
+  var token = req.token;
+  if (token) {
+    decode = jwt.verify(token, process.env.JWT_SECRET);
+    Post.isOwner(decode.id,req.params.idpost)
+      .then((el) => {
+        console.log(el)
+        if(el.length>0){
+          res.json(true)
+        }else{
+          res.json(false)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        res.json(false)
+      })
+  } else {
+      res.json(false)
+  }
+
+}
 exports.index = (req, res) => {
   Post.getAll()
     .then(resultat => {

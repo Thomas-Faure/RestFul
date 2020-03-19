@@ -32,6 +32,26 @@ exports.create = (req, res) => {
 
 }
 
+exports.getCommentsIdOfUserByPostId = (req,res) =>{
+  var token = req.token;
+  if (token) {
+    decode = jwt.verify(token, process.env.JWT_SECRET);
+    Comment.getCommentsIdOfUserByPostId(decode.id,req.params.idpost)
+      .then((el) => {
+        console.log(el)
+        res.json(el)
+        
+      })
+      .catch(err => {
+        
+        res.json({})
+      })
+  } else {
+      res.json({})
+  }
+
+
+}
 exports.validate = (req,res) =>{
   Comment.updateValidationByCommentId(req.params.id,1)
   .then(res.json({result:true}))

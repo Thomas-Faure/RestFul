@@ -38,6 +38,19 @@ module.exports.getBestAnswer = () => {
     })
 }
 
+module.exports.isOwner = (userid,postid) =>{
+    return new Promise((resolve,reject)=>{
+       
+        con.query('SELECT * from post where author=? and post_id=?', [userid,postid], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+                
+                resolve(res)
+            }
+        })
+    })
+}
 module.exports.getPostById = (id) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT p.post_id,p.title,p.description,p.post_category,p.author,p.url_image,p.date,c.description as categoryDescription,c.couleur as couleur FROM post p, user u, postCategory c where post_id=? and p.author = u.user_id and c.post_category_id = p.post_category', [id], (err, res) => {
