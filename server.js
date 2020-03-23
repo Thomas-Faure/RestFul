@@ -48,6 +48,7 @@ const commentRouter = require("./routes/commentRouter")
 const opinionRouter = require("./routes/opinionRouter")
 const postCategoryRouter = require("./routes/postCategoryRouter")
 const rateCommentRouter = require("./routes/rateCommentRouter")
+const mailRouter = require("./routes/mailRouter")
 
 // routing
 app.use("/user", userRouter)
@@ -59,6 +60,7 @@ app.use("/commentCategory", commentCategoryRouter)
 app.use("/comment", commentRouter)
 app.use("/opinion",opinionRouter)
 app.use("/postCategory", postCategoryRouter)
+app.use("/mail",mailRouter)
 
 app.use("/rateComment", rateCommentRouter)
 
@@ -80,7 +82,6 @@ app.use(function(req, res, next){
   // default to plain-text. send()
   res.type('txt').send('Not found');
 });
-
 
 
 
