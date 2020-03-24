@@ -9,6 +9,7 @@ router.get("/:author/:comment", rateCommentController.getRateByUserByComment)
 router.get("/:author", rateCommentController.getRatesByUser)
 router.delete("/:author/:comment/delete",Auth, rateCommentController.delete)
 router.post("/:author/:comment/edit",Auth, rateCommentController.edit)
-
+router.get('/post/:id/byToken',Auth, rateCommentController.postRateByToken)
+router.get("/post")
 
 module.exports = router

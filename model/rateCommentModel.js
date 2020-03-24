@@ -35,6 +35,18 @@ module.exports.getRatesByUser = (id) => {
         })
     })
 }
+module.exports.getRateFromPost = (userid, postid) => {
+    return new Promise((resolve, reject) => {
+        con.query('SELECT * FROM rateComment r,comment c where r.comment = c.comment_id and c.post=? and r.author', [postid,userid], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+            
+                resolve(res)
+            }
+        })
+    })
+}
 module.exports.getRateByUserByComment = (userid, commentId) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM rateComment where author=? and comment=?', [userid, commentId], (err, res) => {

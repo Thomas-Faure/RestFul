@@ -1,8 +1,11 @@
 const Rate = require("../model/rateCommentModel")
-
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser')
 exports.create = (req, res) => {
 
-    const author = req.body.author
+    var token = req.token;
+    var decode = jwt.verify(token, process.env.JWT_SECRET);
+    const author = decode.id
     const comment = req.body.comment
     const like = req.body.like
     const rate = new Rate(author,comment,like)
@@ -80,6 +83,15 @@ exports.getRatesByUser = (req, res) => {
             console.log(err)
             res.json({})
         })
+}
+exports.postRateByToken = (req,res) =>{
+    var post_id = req.params.id
+    var token = req.token;
+    var decode = jwt.verify(token, process.env.JWT_SECRET);
+    Rate.getRateFromPost(decode.id,post_id).then(resultat=>{
+        res.json(resultat)
+    })
+
 }
 
 exports.getRateByUserByComment = (req, res) => {
