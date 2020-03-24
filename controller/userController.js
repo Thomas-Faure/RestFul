@@ -2,6 +2,9 @@ const User = require("../model/userModel")
 const ForgottenPassword = require("../model/forgottenPassword")
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
+var nodemailer = require('nodemailer');
+var cors = require('cors');
+const creds = require('../config/config');
 require("dotenv").config()
 
 exports.index = (req, res) => {
@@ -20,33 +23,97 @@ exports.index = (req, res) => {
     })
 }
 
+const crypto = require("crypto");
+async function generateToken() {
+  const buffer = await new Promise((resolve, reject) => {
+    crypto.randomBytes(256, function(ex, buffer) {
+      if (ex) {
+        reject("error generating token");
+      }
+      resolve(buffer);
+    });
+  });
+  const token = crypto
+    .createHash("sha1")
+    .update(buffer)
+    .digest("hex");
+
+
+  return token;
+}
+
+function sendTokenByMail(token,mailTo){
+  var transport = {
+    host: 'smtp.gmail.com', // Don’t forget to replace with the SMTP host of your provider
+    port: 465,
+    auth: {
+        user: creds.USER,
+        pass: creds.PASS
+    }
+}
+
+var transporter = nodemailer.createTransport(transport)
+
+transporter.verify((error, success) => {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('Server is ready to take messages');
+    }
+});
+
+var content = " Hello ! to change your password click on the link bellow \n http://localhost:3000/#/forgotPassword/"+token+" \n Have a good day !"
+
+var mail = {
+    from: "SayNoToSexism",
+    to: mailTo,  // Change to email address that you want to receive messages on
+    subject: 'Create new password',
+    text: content
+}
+
+transporter.sendMail(mail, (err, data) => {
+    if (err) {
+        res.json({
+            status: 'fail'
+        })
+    } else {
+        res.json({
+            status: 'success'
+        })
+    }
+})
+}
 exports.createToken=(req,res)=>{
   var mail = req.body.mail
   User.getUserByMail(mail).then(userByMail =>{
+    console.log(userByMail)
     if(userByMail.length>0){
 
-      var token
-      require('crypto').randomBytes(32, function(ex, buf) {
-        token = buf.toString('hex');
-      });
+      
+      generateToken().then(token=>{
       var user_id = userByMail[0].user_id
       ForgottenPassword.getTokenByUser(user_id).then(exists=>{
 
         if(exists.length <1){
           var forgot = new ForgottenPassword(1,token,user_id)
           ForgottenPassword.create(forgot).then(resultat=>{
+            sendTokenByMail(token,mail)
             res.json(true)
-            //faire l'envoie de mail
+            
           })
     
         }else{
           ForgottenPassword.update(user_id,token).then(resultat=>{
-            //faire un nouveau envoie de mail
+            sendTokenByMail(token,mail)
             res.json(true)
           })
         }
     
       })
+
+      })
+
+      
 
     }else{
       res.json(false)
@@ -62,8 +129,9 @@ exports.verifyToken=(req,res)=>{
   var token = req.params.token
   var password = req.body.password
   ForgottenPassword.getUserByToken(token).then(userByToken =>{
+    console.log(userByToken[0])
     if(userByToken.length>0){
-      var user_id = userByToken[0]
+      var user_id = userByToken[0].user_id
         ForgottenPassword.delete(user_id)
         User.updatePassword(password,user_id)
         res.json(true)
