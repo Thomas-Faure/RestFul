@@ -17,6 +17,8 @@ router.delete('/:id/delete',Admin,userController.delete)
 router.get('/post/:idpost/commentsId',Auth,commentController.getCommentsIdOfUserByPostId)
 router.get("/list",Admin,userController.index)
 router.post("/login", userController.login)
+router.post("/forgotPassword/create/:user_id",userController.createToken)
+router.post("/forgotPassword/verify/:token",userController.verifyToken)
 router.get("/verify",function(req, res, next) {
     var token = req.token;
     // decode token

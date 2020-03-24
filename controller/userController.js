@@ -1,4 +1,5 @@
 const User = require("../model/userModel")
+const ForgottenPassword = require("../model/forgottenPassword")
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
 require("dotenv").config()
@@ -19,6 +20,61 @@ exports.index = (req, res) => {
     })
 }
 
+exports.createToken=(req,res)=>{
+  var mail = req.body.mail
+  User.getUserByMail(mail).then(userByMail =>{
+    if(userByMail.length>0){
+
+      var token
+      require('crypto').randomBytes(32, function(ex, buf) {
+        token = buf.toString('hex');
+      });
+      var user_id = userByMail[0].user_id
+      ForgottenPassword.getTokenByUser(user_id).then(exists=>{
+
+        if(exists.length <1){
+          var forgot = new ForgottenPassword(1,token,user_id)
+          ForgottenPassword.create(forgot).then(resultat=>{
+            res.json(true)
+            //faire l'envoie de mail
+          })
+    
+        }else{
+          ForgottenPassword.update(user_id,token).then(resultat=>{
+            //faire un nouveau envoie de mail
+            res.json(true)
+          })
+        }
+    
+      })
+
+    }else{
+      res.json(false)
+    }
+
+
+  })
+  
+
+}
+
+exports.verifyToken=(req,res)=>{
+  var token = req.params.token
+  var password = req.body.password
+  ForgottenPassword.getUserByToken(token).then(userByToken =>{
+    if(userByToken.length>0){
+      var user_id = userByToken[0]
+        ForgottenPassword.delete(user_id)
+        User.updatePassword(password,user_id)
+        res.json(true)
+    }else{
+      res.json(false)
+    }
+
+  })
+  
+
+}
 
 exports.create = (req,res)=>{
   
@@ -59,9 +115,12 @@ exports.delete = (req, res) => {
       })
 }
 exports.edit = (req, res) => {
-
   var date = new Date(req.body.birthday);
   date.setDate(date.getDate() + 1);
+  var password = req.body.password
+  if(password.length <1){
+    password = undefined
+  }
   const user = new User(
     req.params.id,
      req.body.username,
@@ -71,7 +130,9 @@ exports.edit = (req, res) => {
          req.body.mail,
          req.body.admin,
          req.body.sexe,
-         req.body.password);
+         password);
+
+
   User.editUser(user)
       .then(resultat => {
           res.json(resultat)
