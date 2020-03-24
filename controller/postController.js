@@ -25,24 +25,26 @@ exports.create = (req, res) => {
     
         let data = req.body.data
       
-        if(extension.length > 0 && data.length > 0){
+        if(extension != undefined){
+          if(extension.length > 0 && data.length > 0){
 
-          let base64String = data;
-          let base64Image = base64String.split(';base64,').pop();
-          let fileName = "public/"+el.insertId+"."+extension
-        
-  
-          fs.writeFile(fileName, base64Image,{ encoding: 'base64',flag: 'wx' }, function(err) {
-            if (err){
-              console.log(err);
-            }else{
-              console.log('File created');
-              Post.editImageUrlByPostId(el.insertId,fileName)
-             
+            let base64String = data;
+            let base64Image = base64String.split(';base64,').pop();
+            let fileName = "public/"+el.insertId+"."+extension
+          
+    
+            fs.writeFile(fileName, base64Image,{ encoding: 'base64',flag: 'wx' }, function(err) {
+              if (err){
+                console.log(err);
+              }else{
+                console.log('File created');
+                Post.editImageUrlByPostId(el.insertId,fileName)
               
-            }
-          });
+                
+              }
+            });
 
+          }
         }
         res.json({result: true,id :el.insertId})
       

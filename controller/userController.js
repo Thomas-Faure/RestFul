@@ -189,7 +189,6 @@ exports.edit = (req, res) => {
   if(password.length <1){
     password = undefined
   }
-  console.log(req.params.id)
   var id = 0
   if(req.params.id != undefined){
     id = req.params.id
