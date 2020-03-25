@@ -33,7 +33,7 @@ router.get("/verify",function(req, res, next) {
     );
 
 
-  router.get("/:id",Auth,userController.getUserById)
+  router.get("/:id",Auth,userController.userById)
 
 
 module.exports = router

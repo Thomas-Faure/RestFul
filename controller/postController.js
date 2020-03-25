@@ -81,8 +81,16 @@ exports.isOwner = (req,res) =>{
   }
 
 }
+
+
+
 exports.index = (req, res) => {
-  Post.getAll()
+  var isAdmin = false
+  var token = req.token;
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, function (err, token_data) {
+      if (err) {
+        Post.getAll()
     .then(resultat => {
       resultat.forEach(element => {
         if(element.anonymous == 1){
@@ -97,6 +105,48 @@ exports.index = (req, res) => {
       console.log(err)
       res.json({})
     })
+       
+        
+      } else {
+         User.getUserById(token_data.id).then(el=>{
+            var user = el[0]
+           
+            if(user.admin == 1){
+    
+              Post.getAllAdmin()
+                .then(resultat => {
+                  res.json(resultat)
+                })
+                .catch(err => {
+                  console.log(err)
+                  res.json({})
+                })
+            }
+        })
+      }
+    });
+  }else{
+    Post.getAll()
+    .then(resultat => {
+      resultat.forEach(element => {
+        if(element.anonymous == 1){
+          element.author=-1
+          element.location="somewhere"
+        }
+      });
+      delete resultat.anonymous
+      res.json(resultat)
+    })
+    .catch(err => {
+      console.log(err)
+      res.json({})
+    })
+  
+
+  }
+
+
+  
 }
 
 exports.bestAnswer = (req, res) => {

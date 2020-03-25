@@ -7,6 +7,7 @@ var cors = require('cors');
 const creds = require('../config/config');
 require("dotenv").config()
 
+
 exports.index = (req, res) => {
   
     User.getAll()
@@ -247,7 +248,7 @@ exports.logoff = (req, res) => {
 
   res.json(true)
 }
-exports.getUserById = (req, res) => {
+exports.userById = (req, res) => {
 
   User.getUserById(req.params.id)
   .then(resultat => {
