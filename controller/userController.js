@@ -62,7 +62,7 @@ transporter.verify((error, success) => {
     }
 });
 
-var content = " Hello ! to change your password click on the link bellow \n http://localhost:3000/#/forgotPassword/"+token+" \n Have a good day !"
+var content = " Hello ! to change your password click on the link bellow \n https://antisexism.herokuapp.com/#/forgotPassword/"+token+" \n Have a good day !"
 
 var mail = {
     from: "SayNoToSexism",

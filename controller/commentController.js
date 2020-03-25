@@ -13,20 +13,19 @@ exports.create = (req, res) => {
     decode = jwt.verify(token, process.env.JWT_SECRET);
     const comment = new Comment(1, description, category, decode.id, post_id,new Date().toISOString().slice(0, 19).replace('T', ' '), anonyme)
     Comment.create(comment)
-      .then(() => {
-        console.log("success")
-        res.json({result: true})
+      .then((identifiant) => {
+
+
+        res.json({result: true,id: identifiant.insertId})
       })
       .catch(err => {
         console.log(err)
-        res.json({result: false})
+        res.json({result: false,id:-1})
       })
 
 
-   
-
   } else {
-      res.json({result:false})
+      res.json({result:false,id:-1})
   }
 
 

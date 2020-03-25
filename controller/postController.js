@@ -22,7 +22,8 @@ exports.create = (req, res) => {
       .then((el) => {
         
         let extension = req.body.ext
-    
+        console.log("///////////////////////")
+        console.log(extension)
         let data = req.body.data
       
         if(extension != undefined){
