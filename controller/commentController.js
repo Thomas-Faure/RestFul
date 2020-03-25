@@ -70,6 +70,18 @@ exports.index = (req, res) => {
     })
 }
 
+exports.getCommentsByUserID = (req,res)=>{
+
+  var token = req.token;
+  var decode = jwt.verify(token, process.env.JWT_SECRET);
+  var userid = decode.id
+
+  Comment.getCommentByUserId(userid).then(resultat=>{
+    res.json(resultat)
+
+  })
+}
+
 exports.getCommentByPost = (req, res) => {
 
   Comment.getCommentByPostId(req.params.id)

@@ -61,6 +61,20 @@ module.exports.updateValidationByCommentId = (id,value) => {
         })
     })
 }
+
+module.exports.getCommentByUserId = (userid) => {
+    return new Promise((resolve, reject) => {
+        con.query('SELECT * from comment where author=?', [userid], (err, res) => {
+            if (err) {
+                reject(err)
+            } else {
+
+                resolve(res)
+            }
+        })
+    })
+}
+
 module.exports.getCommentById = (id) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT com.comment_id,com.description,com.comment_category,c.description as category_description,c.color,c.comment_category_id, anonyme FROM comment com, user u, commentCategory c where comment_id=? and com.author = u.user_id and c.comment_category_id = com.comment_category', [id], (err, res) => {
