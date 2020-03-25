@@ -7,7 +7,7 @@ router.get("/", commentController.index)
 router.get("/:id", commentController.getCommentById)
 router.put("/create",Auth, commentController.create)
 router.delete("/:id/delete",Auth, commentController.delete)
-router.post("/:id/edit",Auth, commentController.edit)
+router.post("/:id/edit",Admin, commentController.edit)
 router.put("/:id/validate",Admin,commentController.validate)
 
 

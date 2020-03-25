@@ -11,7 +11,7 @@ router.get("/:id/comments", commentController.getCommentByPost)
 router.post('/create',Auth,postController.create);
 router.get('/:idpost/isOwner',Auth,postController.isOwner);
 router.post('/:id/comment/create',Auth,commentController.create);
-router.post('/:id/edit',Auth,postController.edit)
+router.post('/:id/edit',Admin,postController.edit)
 router.delete('/:id/delete',Auth,postController.delete)
 router.put("/:id/validate",Admin,postController.validate)
 

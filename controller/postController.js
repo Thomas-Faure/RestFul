@@ -143,7 +143,7 @@ exports.delete = (req, res) => {
     })
 }
 exports.edit = (req, res) => {
-  const post = new Post(req.params.id, req.body.title,req.body.description,req.body.category,null," ",null)
+  const post = new Post(req.params.id, req.body.title,req.body.description,req.body.category,null,req.body.img,null,null,null)
   Post.editPost(post)
       .then(resultat => {
           res.json(resultat)
