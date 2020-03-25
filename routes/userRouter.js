@@ -13,6 +13,7 @@ router.get('/logoff',Auth,userController.logoff);
 router.get('/username/:username',userController.getUserByUsername);
 router.post('/create',userController.create);
 router.post('/:id/edit',Auth,userController.edit)
+router.post('/edit',userController.edit)
 router.delete('/:id/delete',Admin,userController.delete)
 router.get('/post/:idpost/commentsId',Auth,commentController.getCommentsIdOfUserByPostId)
 router.get("/list",Admin,userController.index)

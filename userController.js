@@ -189,19 +189,8 @@ exports.edit = (req, res) => {
   if(password.length <1){
     password = undefined
   }
-  var id = 0
-  if(req.params.id != undefined){
-    id = req.params.id
-  }
-  else{
-    var token = req.token;
-    if (token) {
-      decode = jwt.verify(token, process.env.JWT_SECRET);
-      id = decode.id
-    }
-  }
   const user = new User(
-    id,
+    req.params.id,
      req.body.username,
       req.body.firstname,
        req.body.lastname,
@@ -221,8 +210,6 @@ exports.edit = (req, res) => {
           res.json({})
       })
 }
-
-
 exports.login = (req,res) => {
   User.login(req.body.username,req.body.password)
   .then(resultat => {

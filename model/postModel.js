@@ -27,7 +27,7 @@ module.exports.getAll = () => {
 }
 module.exports.getBestAnswer = () => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT * From(SELECT comment_id, post,description, ((SELECT COUNT(*) FROM rateComment WHERE rateComment.comment = c.comment_id and rateComment.like = 1)- (SELECT COUNT(*) FROM rateComment WHERE rateComment.comment = c.comment_id and rateComment.like = 0 )) rate FROM comment c Having rate = ( SELECT MAX(rate) From (SELECT comment_id, post, ((SELECT COUNT(*) FROM rateComment WHERE rateComment.comment = c1.comment_id and rateComment.like = 1) - (SELECT COUNT(*) FROM rateComment WHERE rateComment.comment = c1.comment_id and rateComment.like = 0)) rate FROM comment c1) s1 where s1.post = c.post GROUP BY post))s2 GROUP BY post', (err, res) => {
+        con.query('SELECT * From(SELECT comment_id, post,description, ((SELECT COUNT(*) FROM rateComment WHERE rateComment.comment = c.comment_id and rateComment.like = 1)- (SELECT COUNT(*) FROM rateComment WHERE rateComment.comment = c.comment_id and rateComment.like = 0 )) rate FROM comment c Having rate = ( SELECT MAX(rate) From (SELECT comment_id, post, ((SELECT COUNT(*) FROM rateComment WHERE rateComment.comment = c1.comment_id and rateComment.like = 1) - (SELECT COUNT(*) FROM rateComment WHERE rateComment.comment = c1.comment_id and rateComment.like = 0)) rate FROM comment c1) s1 where s1.post = c.post GROUP BY post))s2 GROUP BY post HAVING s2.rate > 0', (err, res) => {
             if (err) {
                 reject(err)
             } else {
