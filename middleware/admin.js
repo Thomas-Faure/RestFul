@@ -4,9 +4,9 @@ const User = require("../model/userModel")
 require("dotenv").config()
 module.exports = (req, res, next) => {
   try {
-  
+    console.log("try")
     var token = req.token;
-  
+    console.log(token)
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET, function (err, token_data) {
         if (err) {
@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
             User.getUserById(decode.id)
             .then(resultat => {
                 if(resultat.length>0){
-                 
+                  console.log(resultat[0].admin)
                     if(resultat[0].admin == 1){
                         next()
                     }else{

@@ -49,20 +49,7 @@ module.exports.delete = (user_Id) =>{
         })
     })
 }
-module.exports.getUserByMail = (mail)=>{
-    return new Promise((resolve, reject) =>{
-        con.query('SELECT * FROM user where mail=?',[mail], (err, res) => {
-            if (err) {
-                reject(err)
-            } else {
-        
-                resolve(res)
-            }
-        })
-    })
-
-}
-module.exports.getUserById =async (id) => {
+module.exports.getUserById = (id) => {
   return new Promise((resolve, reject) =>{
       con.query('SELECT user_id, firstname, lastname, username, mail, sexe, birthday, admin FROM user where user_id=?',[id], (err, res) => {
           if (err) {

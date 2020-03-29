@@ -110,9 +110,10 @@ exports.index = (req, res) => {
       } else {
          User.getUserById(token_data.id).then(el=>{
             var user = el[0]
-           
+            console.log(user)
             if(user.admin == 1){
-    
+              console.log("c'est un admin !")
+              console.log("on passe ici")
               Post.getAllAdmin()
                 .then(resultat => {
                   res.json(resultat)
