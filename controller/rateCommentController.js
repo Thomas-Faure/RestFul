@@ -15,7 +15,7 @@ exports.create = (req, res) => {
             Rate.create(rate)
                 .then(() => {
                     res.json({result: "rated"})
-                    console.log("rated")
+                 
                 })
                 .catch(err => {
                     res.json({result: "err"})
@@ -28,17 +28,17 @@ exports.create = (req, res) => {
                 Rate.delete(rate)
                     .then(() => {
                         res.json({result: "deleted"})
-                        console.log("deleted")
+                      
                     })
                     .catch(err => {
                         res.json({result: "err"})
-                        console.log(err)
+                        
                     })
             } else {
                 Rate.edit(rate)
                     .then(() => {
                         res.json({result: "updated"})
-                        console.log("edited")
+                        
                     })
                     .catch(err => {
                         res.json({result: "err"})

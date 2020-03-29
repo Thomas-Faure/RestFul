@@ -22,8 +22,6 @@ exports.create = (req, res) => {
       .then((el) => {
         
         let extension = req.body.ext
-        console.log("///////////////////////")
-        console.log(extension)
         let data = req.body.data
       
         if(extension != undefined){
@@ -38,7 +36,7 @@ exports.create = (req, res) => {
               if (err){
                 console.log(err);
               }else{
-                console.log('File created');
+             
                 Post.editImageUrlByPostId(el.insertId,fileName)
               
                 
@@ -110,10 +108,9 @@ exports.index = (req, res) => {
       } else {
          User.getUserById(token_data.id).then(el=>{
             var user = el[0]
-            console.log(user)
+       
             if(user.admin == 1){
-              console.log("c'est un admin !")
-              console.log("on passe ici")
+      
               Post.getAllAdmin()
                 .then(resultat => {
                   res.json(resultat)

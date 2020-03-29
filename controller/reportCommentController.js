@@ -11,7 +11,7 @@ exports.getCommentsReportByPost = (req,res)=>{
             }else{
               let decode = jwt.verify(token, process.env.JWT_SECRET);
               let user_id = decode.id
-              console.log(user_id+ " "+req.params.id)
+           
               Comment.getReportsByPost(req.params.id,user_id)
               .then(resultat => {
                   res.json(resultat)

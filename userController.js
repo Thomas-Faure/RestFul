@@ -86,7 +86,6 @@ transporter.sendMail(mail, (err, data) => {
 exports.createToken=(req,res)=>{
   var mail = req.body.mail
   User.getUserByMail(mail).then(userByMail =>{
-    console.log(userByMail)
     if(userByMail.length>0){
 
       
@@ -129,7 +128,7 @@ exports.verifyToken=(req,res)=>{
   var token = req.params.token
   var password = req.body.password
   ForgottenPassword.getUserByToken(token).then(userByToken =>{
-    console.log(userByToken[0])
+ 
     if(userByToken.length>0){
       var user_id = userByToken[0].user_id
         ForgottenPassword.delete(user_id)

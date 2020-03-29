@@ -2,13 +2,13 @@ const Comment = require("../model/commentModel")
 const User = require("../model/userModel")
 const jwt = require('jsonwebtoken');
 exports.create = (req, res) => {
-  console.log(req.body)
+
   const description = req.body.description
   const category = req.body.category
   const post_id = req.params.id
   var token = req.token;
   var anonyme = req.body.anonyme
-  console.log(anonyme)
+
   if (token) {
     decode = jwt.verify(token, process.env.JWT_SECRET);
     const comment = new Comment(1, description, category, decode.id, post_id,new Date().toISOString().slice(0, 19).replace('T', ' '), anonyme)
@@ -38,7 +38,7 @@ exports.getCommentsIdOfUserByPostId = (req,res) =>{
     decode = jwt.verify(token, process.env.JWT_SECRET);
     Comment.getCommentsIdOfUserByPostId(decode.id,req.params.idpost)
       .then((el) => {
-        console.log(el)
+       
         res.json(el)
         
       })

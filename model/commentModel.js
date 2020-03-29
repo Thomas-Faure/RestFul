@@ -89,7 +89,6 @@ module.exports.getCommentById = (id) => {
 }
 
 module.exports.create = (comment) => {
-    console.log(comment.anonyme)
     return new Promise(function (resolve, reject) {
         con.query('INSERT INTO comment (description,comment_category,author,post,date,anonyme) VALUES (?,?,?,?,?,?);', [comment.description,comment.comment_category,comment.author,comment.post,comment.date,comment.anonyme], (err, res) => {
             if (err) {
