@@ -1,5 +1,8 @@
 const Post = require("../model/reportPostModel")
 const jwt = require('jsonwebtoken');
+/**
+ * Permet de récuperer tout les reports des posts
+ */
 exports.index = (req, res) => {
     
     Post.getAll()
@@ -11,6 +14,9 @@ exports.index = (req, res) => {
         res.json({})
     })
 }
+/*
+  Permet de récuperer combien de fois un post a été report
+*/
 
 exports.getCountReports = (req, res) =>{
   Post.getCountReportByPosts()
@@ -18,6 +24,10 @@ exports.getCountReports = (req, res) =>{
     res.json(resultat)
   })
 }
+
+/**
+ * Permet de 
+ */
 
 
 exports.getPostByIdByToken = (req, res) => {
@@ -47,7 +57,9 @@ exports.getPostByIdByToken = (req, res) => {
   }
   
 }
-
+/**
+ * Permet de récuperer les posts qui sont report par un certain utilisateur dont l'identifiant est récuperé via le token
+ */
 exports.getPostsReportedByUserToken= (req,res)=>{
   var token = req.token;
   if(token){
@@ -75,6 +87,10 @@ exports.getPostsReportedByUserToken= (req,res)=>{
   }
 
 }
+/*
+  Permet de verifier si un utilisateur a report ou pas un certain commentaire, l'identifiant du post est passé en paramètre d'URI tout comme l'identifiant de l'utilisateur
+*/
+
 exports.getPostById = (req, res) => {
 
   Post.getReport(req.params.post,req.params.author)
@@ -87,6 +103,11 @@ exports.getPostById = (req, res) => {
   })
 }
 
+/**
+ * Permet de récuperer le nombre de fois qu'un post à été report via son identifiant passé en paramètre d'URI
+ * 
+*/
+
 exports.getReportCountByPostId = (req, res) => {
  
   Post.getAllByPost(req.params.id)
@@ -98,6 +119,9 @@ exports.getReportCountByPostId = (req, res) => {
       res.json({})
   })
 }
+/**
+ * Permet de report un post pour un utilisateur donnée, l'identifiant du post report est passé dans le body et celui de l'utilisateur est récuperé par le token
+ */
 exports.report = (req, res) => {
   // res.json("oui")
   let post_id = req.body.post_id

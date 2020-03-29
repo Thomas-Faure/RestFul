@@ -5,7 +5,9 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
 
 
-
+/**
+ * Permet de créer un nouveau post via ses champs qui sont renseignés dans le body de la requête
+ */
 exports.create = (req, res) => {
 
   const title = req.body.title
@@ -57,6 +59,9 @@ exports.create = (req, res) => {
   }
 }
 
+/**
+ * Permet de verifier si un post nous appartient, le post est passé en paramètre d'URI, l'identifiant de l'utilisateur lui est récuperer via le token
+ */
 exports.isOwner = (req,res) =>{
   var token = req.token;
   if (token) {
@@ -80,7 +85,10 @@ exports.isOwner = (req,res) =>{
 
 }
 
-
+/**
+ * Permet de récuperer tout les posts existant, si l'utlisateur n'est pas un administrateur le filtre "anonyme" est appliqué si l'utilisateur créateur du post a souhaité anonymiser son post,
+ * mais si l'utilisateur est admin , il obtient tout les posts sans l'anonymisation
+ */
 
 exports.index = (req, res) => {
   var isAdmin = false
@@ -147,6 +155,10 @@ exports.index = (req, res) => {
   
 }
 
+/**
+ * 
+ * Permet de récuperer la meilleur réponse pour chaque post
+ */
 exports.bestAnswer = (req, res) => {
   Post.getBestAnswer()
     .then(resultat => {
@@ -157,6 +169,9 @@ exports.bestAnswer = (req, res) => {
       res.json({})
     })
 }
+/**
+ * Permet de récuperer les informations d'un post via son identifiant qui est passé en paramètre d'URI
+ */
 exports.getPostById = (req, res) => {
 
   Post.getPostById(req.params.id)
@@ -168,6 +183,9 @@ exports.getPostById = (req, res) => {
       res.json({})
     })
 }
+/**
+ * Permet de supprimer un post via son identifiant passé en paramètre d'URI
+ */
 
 exports.delete = (req, res) => {
   const id = req.params.id
@@ -191,6 +209,9 @@ exports.delete = (req, res) => {
       })
     })
 }
+/**
+ * Permet de modifier un post existant via son identifiant passé en paramètre d'URI ainsi que ses informations qui sont passé dans le body de la requete
+ */
 exports.edit = (req, res) => {
   const post = new Post(req.params.id, req.body.title,req.body.description,req.body.category,null,req.body.img,null,null,null)
   Post.editPost(post)
@@ -203,6 +224,9 @@ exports.edit = (req, res) => {
       })
 }
 
+/*
+  Permet de valider un post
+*/
 exports.validate = (req,res) =>{
   Post.updateValidationByPostId(req.params.id,1)
   .then(res.json({result:true}))

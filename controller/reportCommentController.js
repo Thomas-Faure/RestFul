@@ -1,6 +1,11 @@
 const Comment = require("../model/reportCommentModel")
 const jwt = require('jsonwebtoken');
 
+/**
+ * Permet de récuperer la liste de commentaire qu'un utilisateur a reporté pour un certain post.
+ * L'identifiant de l'utilisateur est récuperé via le Token
+ * L'identifiant du post est passé lui en paramètre de l'URI
+ */
 exports.getCommentsReportByPost = (req,res)=>{
   var token = req.token;
   if(token){
@@ -31,6 +36,8 @@ exports.getCommentsReportByPost = (req,res)=>{
   }
 
 }
+
+
 exports.getPostByIdByToken = (req, res) => {
     var token = req.token;
     if(token){
@@ -61,6 +68,9 @@ exports.getPostByIdByToken = (req, res) => {
     
   }
 
+  /**
+   * Permet de compter le nombre de report par commentaire
+   */
 
   exports.getCountReports = (req, res) =>{
     Comment.getCountReportByComments()
@@ -68,6 +78,8 @@ exports.getPostByIdByToken = (req, res) => {
       res.json(resultat)
     })
   }
+
+  /**Permet de report un commentaire via son identifiant passé en paramètre d'URI, l'identifiant de l'utlisateur lui est récuperé via le Token */
   exports.report = (req, res) => {
 
     let comment_id = req.body.comment_id
@@ -102,8 +114,5 @@ exports.getPostByIdByToken = (req, res) => {
      } else {
        res.json({result: null})
      }
-     
-   
-   
    }
      

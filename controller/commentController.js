@@ -1,6 +1,13 @@
 const Comment = require("../model/commentModel")
 const User = require("../model/userModel")
 const jwt = require('jsonwebtoken');
+
+
+/*
+  Permet de créer un nouveau commentaire avec tout les champs nécessaire passé dans le "body" par l'utilisateur effectuant la requête
+
+
+*/
 exports.create = (req, res) => {
 
   const description = req.body.description
@@ -32,6 +39,11 @@ exports.create = (req, res) => {
 
 }
 
+/*
+  Retourne l'identifiant des commentaires d'un utilisateur X par rapport à un numéro de post
+  L'identifiant de l'utilisateur est récuperer par le token , l'identifiant du post lui est récuperé via l'URI
+*/
+
 exports.getCommentsIdOfUserByPostId = (req,res) =>{
   var token = req.token;
   if (token) {
@@ -52,11 +64,22 @@ exports.getCommentsIdOfUserByPostId = (req,res) =>{
 
 
 }
+
+/**
+ * 
+ * Permet de valider un commentaire (pour un administrateur)
+ * 
+ */
 exports.validate = (req,res) =>{
   Comment.updateValidationByCommentId(req.params.id,1)
   .then(res.json({result:true}))
   res.json({result:false})
 }
+
+/**
+ * 
+ * Permet de retourner en JSON la liste de tout les commentaires
+ */
 
 exports.index = (req, res) => {
 
@@ -69,6 +92,9 @@ exports.index = (req, res) => {
       res.json({})
     })
 }
+/**
+ * Retourne tout les commentaires lié à un utilisateur dont l'identifiant est passé en paramètre d'URI
+ */
 
 exports.getCommentsByUserID = (req,res)=>{
 
@@ -79,6 +105,10 @@ exports.getCommentsByUserID = (req,res)=>{
 
   })
 }
+
+/**
+ * Retourne tout les commentaires lié à un post dont l'identifiant est passé en paramètre d'URI
+ */
 
 exports.getCommentByPost = (req, res) => {
 
@@ -92,6 +122,10 @@ exports.getCommentByPost = (req, res) => {
     })
 }
 
+/**
+ * Permet de supprimer un commentaire grâce à son identifiant qui est passé en paramètre d'URI
+ */
+
 exports.delete = (req, res) => {
   const id = req.params.id
   Comment.delete(id)
@@ -103,6 +137,9 @@ exports.delete = (req, res) => {
           res.json({})
       })
 }
+/**
+ * Permet de modifier un commentaire via son identifiant passé en paramètre d'URI ainsi que tout les champs nécessaire à la modification qui sont passé dans le "body" de la requête utilisateur
+ */
 exports.edit = (req, res) => {
 
   const comment = new Comment(req.params.id,req.body.description,req.body.comment_category,null,null,null);
@@ -116,6 +153,9 @@ exports.edit = (req, res) => {
       })
 }
 
+/**
+ * Permet de récuperer les informations d'un commentaire dont l'identifiant est passé en paramètre d'URI
+ */
 exports.getCommentById = (req, res) => {
 
   Comment.getCommentById(req.params.id)
