@@ -26,7 +26,7 @@ exports.getCountReports = (req, res) =>{
 }
 
 /**
- * Permet de 
+ * Permet de récuperer les posts d'un utilisateur dont l'id est contenu dans le token
  */
 
 

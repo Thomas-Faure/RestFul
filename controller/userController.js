@@ -7,7 +7,9 @@ var cors = require('cors');
 const creds = require('../config/config');
 require("dotenv").config()
 
-
+/*
+    Permet de récupérer tous les utilistateurs sans leurs mot de passe
+*/
 exports.index = (req, res) => {
   
     User.getAll()
@@ -24,6 +26,7 @@ exports.index = (req, res) => {
     })
 }
 
+// A Faire
 const crypto = require("crypto");
 async function generateToken() {
   const buffer = await new Promise((resolve, reject) => {
@@ -45,7 +48,7 @@ async function generateToken() {
 
 function sendTokenByMail(token,mailTo){
   var transport = {
-    host: 'smtp.gmail.com', // Don’t forget to replace with the SMTP host of your provider
+    host: 'smtp.gmail.com', 
     port: 465,
     auth: {
         user: creds.USER,
@@ -67,7 +70,7 @@ var content = " Hello ! to change your password click on the link bellow \n http
 
 var mail = {
     from: "SayNoToSexism",
-    to: mailTo,  // Change to email address that you want to receive messages on
+    to: mailTo,  
     subject: 'Create new password',
     text: content
 }

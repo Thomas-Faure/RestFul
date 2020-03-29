@@ -1,4 +1,5 @@
 const con = require("../config/db.js")
+//A Faire
 class ForgottenPassword{
     constructor(id,token,user_id) {
         this.id=id

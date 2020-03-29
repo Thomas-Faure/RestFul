@@ -1,4 +1,7 @@
 const con = require("../config/db.js")
+/*
+    Class opinion
+*/
 class Opinion {
     constructor(author, post, like) {
         this.author = author;
@@ -7,6 +10,10 @@ class Opinion {
     }
 }
 module.exports = Opinion
+
+/*
+    Recuperer tous les opinions
+*/
 module.exports.getAll = () => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM opinion', (err, res) => {
@@ -20,6 +27,9 @@ module.exports.getAll = () => {
     })
 }
 
+/*
+    Recuperer les opinions d'un utilisateur dont l'id est donne en parametres
+*/
 module.exports.getOpinionsByUser = (id) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM opinion where author=?', [id], (err, res) => {
@@ -33,6 +43,9 @@ module.exports.getOpinionsByUser = (id) => {
     })
 }
 
+/*
+    Recuperer les opinions d'un post dont l'id est donne en parametres
+*/
 module.exports.getOpinionsByPost = (id) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM opinion where post=?', [id], (err, res) => {
@@ -45,6 +58,10 @@ module.exports.getOpinionsByPost = (id) => {
         })
     })
 }
+
+/*
+    Recuperer les opinions d'un utilisateur et d'un post dont les id sont donnes en parametres
+*/
 module.exports.getOpinionByUserByPost = (userid, postId) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM opinion where author=? and post=?', [userid, postId], (err, res) => {
@@ -58,6 +75,9 @@ module.exports.getOpinionByUserByPost = (userid, postId) => {
     })
 }
 
+/*
+    Ajouter l'opinion donne en parametres
+*/
 module.exports.create = (opinion) => {
     return new Promise(function (resolve, reject) {
         con.query('INSERT INTO opinion VALUES (?,?,?);', [opinion.author, opinion.post, opinion.like], (err, res) => {
@@ -69,6 +89,9 @@ module.exports.create = (opinion) => {
         })
     })
 }
+/*
+    Supprime l'opinion en parametres
+*/
 module.exports.delete = (opinion) => {
     return new Promise(function (resolve, reject) {
         con.query('DELETE FROM opinion WHERE author = ? and post = ?', [opinion.author, opinion.post], (err, res) => {
@@ -80,6 +103,9 @@ module.exports.delete = (opinion) => {
         })
     })
 }
+/*
+    Modifie l'opinion en parametres
+*/
 module.exports.edit = (opinion) => {
     return new Promise(function (resolve, reject) {
         con.query('UPDATE opinion SET like = ? WHERE author = ? and post = ?', [opinion.like, opinion.author, opinion.post], (err, res) => {

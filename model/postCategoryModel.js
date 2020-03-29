@@ -1,4 +1,7 @@
 const con = require("../config/db.js")
+/*
+  Class PostCategory
+*/
 class PostCategory {
     constructor(post_category_id, description, couleur, url_image) {
         this.post_category_id = post_category_id;
@@ -8,6 +11,9 @@ class PostCategory {
     }
 }
 module.exports = PostCategory
+/*
+    Recuperer toutes les categories de post
+*/
 module.exports.getAll = () => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM postCategory', (err, results) => {
@@ -22,6 +28,9 @@ module.exports.getAll = () => {
         })
     })
 }
+/*
+    Ajoute le catégorie de post donnee en parametres
+*/
 module.exports.create = (postCategory) => {
     return new Promise(function (resolve, reject) {
         con.query('INSERT INTO postCategory (description, couleur) VALUES (?,?);', [postCategory.description, postCategory.couleur], (err, res) => {
@@ -33,6 +42,10 @@ module.exports.create = (postCategory) => {
         })
     })
 }
+
+/*
+    Supprime la catégorie de post donnee en parametres
+*/
 module.exports.delete = (post_category_id) => {
     return new Promise(function (resolve, reject) {
         con.query('DELETE FROM postCategory WHERE post_category_id = ?', [post_category_id], (err, res) => {
@@ -44,6 +57,9 @@ module.exports.delete = (post_category_id) => {
         })
     })
 }
+/*
+    Recupere la catégorie du post dont l'id est donnee en parametres
+*/
 module.exports.getPostCategoryById = (id) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM postCategory where post_category_id=?', [id], (err, res) => {
@@ -56,6 +72,9 @@ module.exports.getPostCategoryById = (id) => {
         })
     })
 }
+/*
+    Modifie la catégorie du post donnee en parametres
+*/
 module.exports.editPostCategoryById = (postCategory) => {
     return new Promise((resolve, reject) => {
         con.query('UPDATE postCategory SET description = ?, couleur = ? where post_category_id=?', [postCategory.description, postCategory.couleur, postCategory.post_category_id], (err, res) => {

@@ -1,7 +1,11 @@
 const Opinion = require("../model/opinionModel")
 const jwt = require('jsonwebtoken');
-exports.create = (req, res) => {
 
+/*
+    Permet d'ajouter un opinion pour un post passer dans le "body" pour l'utilisateur dont le token est passé en paramètre
+    Supprime l'opinion s'il est déjà existant dans la base de données.
+*/
+exports.create = (req, res) => {
     var token = req.token;
 
     if (token) {
@@ -46,6 +50,11 @@ exports.create = (req, res) => {
 
     
 }
+
+/*
+    Permet de récupérer au format json les opinions 
+
+*/
 exports.index = (req, res) => {
     Opinion.getAll()
         .then(resultat => {
@@ -56,6 +65,11 @@ exports.index = (req, res) => {
             res.json({})
         })
 }
+
+/*
+    Permet de supprimer l'opinion dont l'id du post et de l'auteur sont passés en paramètres
+
+*/
 exports.delete = (req, res) => {
     const author = req.params.author
     const post = req.params.post
@@ -69,6 +83,10 @@ exports.delete = (req, res) => {
             res.json({})
         })
 }
+/*
+    Permet de modifier l'opinion dont l'id du post et de l'auteur sont passés en paramètres
+
+*/
 exports.edit = (req, res) => {
     const author = req.params.author
     const post = req.params.post
@@ -84,6 +102,10 @@ exports.edit = (req, res) => {
         })
 }
 
+
+/*
+    Permet de récupérer les opinions d'un user dont l'id est passé en paramètres
+*/
 exports.getOpinionsByUser = (req, res) => {
     Opinion.getOpinionsByUser(req.params.id)
         .then(resultat => {
@@ -94,7 +116,10 @@ exports.getOpinionsByUser = (req, res) => {
             res.json({})
         })
 }
+/*
+    Permet de récupérer les opinions d'un post dont l'id est passé en paramètres
 
+*/
 exports.getOpinionsByPost = (req, res) => {
     Opinion.getOpinionsByPost(req.params.id)
         .then(resultat => {
@@ -105,6 +130,11 @@ exports.getOpinionsByPost = (req, res) => {
             res.json({})
         })
 }
+
+/*
+    Permet de récupérer les opinions dont l'id du post et de l'auteur sont passés en paramètres
+
+*/
 exports.getOpinionByUserByPost = (req, res) => {
     const author = req.params.author
     const post = req.params.post

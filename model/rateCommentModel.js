@@ -1,4 +1,7 @@
 const con = require("../config/db.js")
+/*
+    Classe RateComment
+*/
 class RateComment {
     constructor(author, comment, like) {
         this.author = author;
@@ -9,7 +12,9 @@ class RateComment {
 
 
 module.exports = RateComment
-
+/*
+    Recupere toutes les notes de commentaires
+*/
 module.exports.getAll = () => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM rateComment', (err, res) => {
@@ -22,7 +27,9 @@ module.exports.getAll = () => {
         })
     })
 }
-
+/*
+    Recupere toutes les notes de commentaires dont l'id de l'auteur est donne en parametres
+*/
 module.exports.getRatesByUser = (id) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM rateComment where author=?', [id], (err, res) => {
@@ -35,6 +42,9 @@ module.exports.getRatesByUser = (id) => {
         })
     })
 }
+/*
+    A Faire
+*/
 module.exports.getRateFromPost = (userid, postid) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM rateComment r,comment c where r.comment = c.comment_id and c.post=? and r.author', [postid,userid], (err, res) => {
@@ -47,6 +57,9 @@ module.exports.getRateFromPost = (userid, postid) => {
         })
     })
 }
+/*
+    Recupere les notes pour le commentaire dont l'id de l'auteur et du commentaire sont donnes en parametres
+*/
 module.exports.getRateByUserByComment = (userid, commentId) => {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM rateComment where author=? and comment=?', [userid, commentId], (err, res) => {
@@ -59,6 +72,10 @@ module.exports.getRateByUserByComment = (userid, commentId) => {
         })
     })
 }
+
+/*
+    Creer la note donne en parametres
+*/
 module.exports.create = (rate) => {
     return new Promise(function (resolve, reject) {
         con.query('INSERT INTO rateComment VALUES (?,?,?);', [rate.author, rate.comment, rate.like], (err, res) => {
@@ -70,6 +87,9 @@ module.exports.create = (rate) => {
         })
     })
 }
+/*
+    Supprimer la note donne en parametres
+*/
 module.exports.delete = (rate) => {
     return new Promise(function (resolve, reject) {
         con.query('DELETE FROM rateComment WHERE author = ? and comment = ?', [rate.author, rate.comment], (err, res) => {
@@ -81,7 +101,9 @@ module.exports.delete = (rate) => {
         })
     })
 }
-
+/*
+    Modifier la note donne en parametres
+*/
 module.exports.edit = (rate) => {
     return new Promise(function (resolve, reject) {
         con.query('UPDATE rateComment SET `like` = ? WHERE author = ? and comment = ?', [rate.like, rate.author, rate.comment], (err, res) => {

@@ -2,9 +2,13 @@ var nodemailer = require('nodemailer');
 var cors = require('cors');
 const creds = require('../config/config');
 
+/*
+    Permet d'envoyer un mail via le service google depuis le formulaire de Contact de React
+
+*/
 exports.send = (req, res, next) => {
     var transport = {
-        host: 'smtp.gmail.com', // Don’t forget to replace with the SMTP host of your provider
+        host: 'smtp.gmail.com', 
         port: 465,
         auth: {
             user: creds.USER,
@@ -28,7 +32,7 @@ exports.send = (req, res, next) => {
 
     var mail = {
         from: name,
-        to: 'fsmague@gmail.com',  // Change to email address that you want to receive messages on
+        to: 'saynotosexismweb@gmail.com', 
         subject: 'New Message from Say no to sexism',
         text: content
     }
