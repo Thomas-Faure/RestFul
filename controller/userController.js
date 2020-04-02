@@ -26,7 +26,7 @@ exports.index = (req, res) => {
     })
 }
 
-// A Faire
+// fonction qui permet de generer un token unique pour le mot de passe oublié
 const crypto = require("crypto");
 async function generateToken() {
   const buffer = await new Promise((resolve, reject) => {

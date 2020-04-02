@@ -43,7 +43,7 @@ module.exports.getRatesByUser = (id) => {
     })
 }
 /*
-    A Faire
+    Recuperer pour un post donné toute les notes qu'un utilisateur a attribué aux commentaires appartenant à se post
 */
 module.exports.getRateFromPost = (userid, postid) => {
     return new Promise((resolve, reject) => {

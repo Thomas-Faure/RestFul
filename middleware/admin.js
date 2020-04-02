@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser')
 const User = require("../model/userModel")
 require("dotenv").config()
 
-/* A Faire
+/* 
     Verifie si l'id du token correspond à un id d'utilisateur qui a le role Administrateur
 */
 module.exports = (req, res, next) => {

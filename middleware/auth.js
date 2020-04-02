@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
 require("dotenv").config()
-/* A Faire
-    Verifie si le token de l'utilisateur est valide
+/*
+    Verifie si le token de l'utilisateur est valide (existant)
 */
 module.exports = (req, res, next) => {
   try {
